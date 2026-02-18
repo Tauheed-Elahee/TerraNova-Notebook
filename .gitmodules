@@ -1,0 +1,6 @@
+[submodule "Reference_Papers/Representation-Manifolds"]
+	path = Reference_Papers/Representation-Manifolds
+	url = git@github.com:alexandermodell/Representation-Manifolds.git
+[submodule "Reference_Papers/MultiDimensionalFeatures"]
+	path = Reference_Papers/MultiDimensionalFeatures
+	url = git@github.com:JoshEngels/MultiDimensionalFeatures.git
