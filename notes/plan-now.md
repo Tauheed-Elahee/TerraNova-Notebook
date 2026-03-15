@@ -1,9 +1,9 @@
-# Plan: Geometric Analysis of text-embedding-3-large Vectors for Medical Terms
+# Plan: Geometric Analysis of text-embedding-3-large Vectors for Medical Disorders
 
 Follows the colours/dates pipeline from `Representation-Manifolds`. Replaces hue distances with
-SNOMED CT ontological distances and colour names with medical preferred terms. Embeddings are
-retrieved from the existing Azure AI Search database (bare preferred terms, text-embedding-3-large,
-3072-dim).
+SNOMED CT ontological distances and colour names with SNOMED CT disorder preferred terms.
+Concepts are filtered to the `disorder` semantic tag. Embeddings are generated fresh using
+`text-embedding-3-large` (3072-dim) via the OpenAI API.
 
 ---
 
@@ -12,46 +12,75 @@ retrieved from the existing Azure AI Search database (bare preferred terms, text
 ### 1a. Explore hierarchy interactively (snowstorm-azure MCP in Claude)
 
 Before writing any notebook code, use the snowstorm-azure MCP to pick a suitable hierarchy root
-and check concept counts:
+and check concept counts. Target 100–300 `disorder` concepts for a first experiment.
 
-- `ecl_query("<< 50043002")` — all respiratory disorders, check total count
-- `get_children("50043002")` — top-level subcategories
-- Adjust ECL depth filter (e.g. `<<2 50043002` = within 2 levels) to target 100–300 concepts
+```
+ecl_query("<< 50043002")          # all respiratory disorders — check count
+get_children("50043002")          # top-level subcategories
+get_by_semantic_tag("disorder")   # confirm tool returns disorder concepts
+```
 
 Candidate starting hierarchies:
 
-| Body system | ECL |
-|---|---|
-| Respiratory disorders | `<< 50043002` |
-| Cardiovascular disorders | `<< 49601007` |
-| Infectious diseases | `<< 40733004` |
+| Body system | SNOMED root | ECL |
+|---|---|---|
+| Respiratory disorders | `50043002` | `<< 50043002` |
+| Cardiovascular disorders | `49601007` | `<< 49601007` |
+| Infectious diseases | `40733004` | `<< 40733004` |
 
-### 1b. Retrieve concepts (Snowstorm REST API in notebook)
+Use `ecl_query` with increasing depth limits to find a count in the 100–300 range before
+committing. The ECL `<<2 50043002` restricts to concepts within 2 levels of the root.
+
+### 1b. Retrieve disorder concepts (Snowstorm REST API in notebook)
+
+The Snowstorm REST API supports a `semanticTag` parameter to filter results server-side,
+avoiding the need to post-filter in Python:
 
 ```python
-import requests, pandas as pd
+import requests
+import pandas as pd
 
 SNOWSTORM_URL = "https://snowstorm.snomedtools.org/snowstorm/snomed-ct"
 BRANCH = "MAIN"
 
-def ecl_query(ecl: str, limit: int = 500) -> list[dict]:
+def get_disorder_concepts(ecl: str, limit: int = 300) -> list[dict]:
     url = f"{SNOWSTORM_URL}/{BRANCH}/concepts"
-    params = {"ecl": ecl, "limit": limit, "active": True}
+    params = {
+        "ecl": ecl,
+        "semanticTag": "disorder",
+        "limit": limit,
+        "active": True,
+    }
     r = requests.get(url, params=params)
     r.raise_for_status()
     return r.json()["items"]
 
-concepts = ecl_query("<< 50043002", limit=300)
-concept_ids   = [c["conceptId"] for c in concepts]
+concepts = get_disorder_concepts("<< 50043002", limit=300)
+concept_ids     = [c["conceptId"] for c in concepts]
 preferred_terms = [c["pt"]["term"] for c in concepts]
+fsns            = [c["fsn"]["term"] for c in concepts]
 
-df_concepts = pd.DataFrame({"concept_id": concept_ids, "preferred_term": preferred_terms})
+df_concepts = pd.DataFrame({
+    "concept_id":     concept_ids,
+    "preferred_term": preferred_terms,
+    "fsn":            fsns,
+})
 df_concepts.to_csv("data/concepts.csv", index=False)
 ```
 
 ### 1c. Compute pairwise SNOMED CT ontological distances
 
+For each concept, retrieve its full ancestor chain. Pairwise distance is computed as the
+shortest path through the IS-A hierarchy using the shared ancestor (LCA) approximation:
+
+```
+distance(A, B) = depth(A) + depth(B) − 2 × depth(LCA(A, B))
+               ≈ |ancestors(A)| + |ancestors(B)| − 2 × |ancestors(A) ∩ ancestors(B)|
+```
+
 ```python
+import numpy as np
+
 def get_ancestors(concept_id: str) -> set[str]:
     url = f"{SNOWSTORM_URL}/{BRANCH}/concepts/{concept_id}/ancestors"
     r = requests.get(url, params={"form": "inferred", "limit": 200})
@@ -63,7 +92,7 @@ ancestor_sets = {cid: get_ancestors(cid) for cid in concept_ids}
 def ontological_distance(a_id, b_id):
     anc_a = ancestor_sets[a_id]
     anc_b = ancestor_sets[b_id]
-    lca_depth = len(anc_a & anc_b)   # shared ancestors ≈ depth of LCA
+    lca_depth = len(anc_a & anc_b)
     return len(anc_a) + len(anc_b) - 2 * lca_depth
 
 n = len(concept_ids)
@@ -79,53 +108,49 @@ pd.DataFrame(D_snomed).to_csv("data/ontological_distances.csv", index=False, hea
 
 ---
 
-## Phase 2 — Retrieve Embeddings (`2-retrieve-embeddings.ipynb`)
+## Phase 2 — Generate Embeddings (`2-generate-embeddings.ipynb`)
 
-Embeddings are already in Azure AI Search (bare preferred terms, text-embedding-3-large, 3072-dim).
-No new embeddings need to be generated.
+Re-embed preferred terms directly using `text-embedding-3-large` via the OpenAI API.
+Direct reuse of `get_embeddings()` from `Reference_Papers/Representation-Manifolds/2-get_text_embeddings.ipynb`.
 
-### 2a. Fetch from Azure AI Search
+### 2a. Embed preferred terms
 
 ```python
-import os
-import numpy as np
-import pandas as pd
-from azure.search.documents import SearchClient
-from azure.core.credentials import AzureKeyCredential
+# --- reused from 2-get_text_embeddings.ipynb ---
+import openai, os, pandas as pd, numpy as np
 
-client = SearchClient(
-    endpoint=os.getenv("AZURE_SEARCH_ENDPOINT"),
-    index_name=os.getenv("AZURE_SEARCH_INDEX"),
-    credential=AzureKeyCredential(os.getenv("AZURE_SEARCH_KEY"))
-)
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Batch fetch by concept ID
-id_filter = " or ".join([f"concept_id eq '{cid}'" for cid in concept_ids])
-results = client.search(
-    search_text="*",
-    filter=id_filter,
-    select=["concept_id", "preferred_term", "embedding_vector"],  # adjust field names to match index schema
-    top=len(concept_ids)
-)
+def chunker(seq, size):
+    return (seq[pos:pos + size] for pos in range(0, len(seq), size))
 
-embeddings = {r["concept_id"]: r["embedding_vector"] for r in results}
+def get_embeddings(queries, model, **kwargs):
+    queries = [q.replace('\n', ' ') for q in queries]
+    embeddings_data = []
+    for chunk in chunker(queries, 2048):
+        response = client.embeddings.create(input=chunk, model=model, **kwargs)
+        embeddings_data.extend(response.data)
+    return pd.DataFrame([x.embedding for x in embeddings_data], index=queries)
+# --- end reuse ---
+
+df_concepts = pd.read_csv("data/concepts.csv")
+X_raw = get_embeddings(df_concepts["preferred_term"].tolist(), model="text-embedding-3-large")
+# shape: [n_concepts, 3072]
+
+X_raw.to_csv("data/embeddings_raw.csv", index=False, header=False)
 ```
 
-### 2b. Align with concept list and normalise
+### 2b. Normalise and align with distance matrix
 
 ```python
-df_concepts = pd.read_csv("data/concepts.csv")
+D_snomed = pd.read_csv("data/ontological_distances.csv", header=None).values
 
-X_raw = np.array([embeddings[cid] for cid in df_concepts["concept_id"]])  # [n, 3072]
-
-# Remove zero-norm rows
-norms = np.linalg.norm(X_raw, axis=1)
-mask = norms > 1e-3
-X = X_raw[mask] / norms[mask, np.newaxis]   # unit sphere
+norms = np.linalg.norm(X_raw.values, axis=1)
+mask  = norms > 1e-3                                       # remove zero-norm rows
+X     = X_raw.values[mask] / norms[mask, np.newaxis]      # unit sphere [n, 3072]
 
 df_concepts = df_concepts[mask].reset_index(drop=True)
-D_snomed = pd.read_csv("data/ontological_distances.csv", header=None).values
-D_snomed = D_snomed[np.ix_(mask, mask)]
+D_snomed    = D_snomed[np.ix_(mask, mask)]
 
 pd.DataFrame(X).to_csv("data/embeddings_normalised.csv", index=False, header=False)
 df_concepts.to_csv("data/concepts_filtered.csv", index=False)
@@ -138,12 +163,12 @@ pd.DataFrame(D_snomed).to_csv("data/ontological_distances_filtered.csv", index=F
 
 Near-complete reuse of the colours section of
 `Reference_Papers/Representation-Manifolds/3-reproduce_figures.ipynb`.
+SNOMED CT ontological distances replace hue distances.
 
 ```python
 import sys
 sys.path.append("Reference_Papers/Representation-Manifolds")
-from utils import knn_graph, largest_connected_component, chatterjee_corr
-from utils import interactive_3d_plot, distance_plot
+from utils import knn_graph, largest_connected_component, interactive_3d_plot, distance_plot
 
 import numpy as np
 import pandas as pd
@@ -164,14 +189,14 @@ D_snomed = pd.read_csv("data/ontological_distances_filtered.csv", header=None).v
 
 ```python
 pca = PCA(n_components=3)
-Xp = pca.fit_transform(X)
+Xp  = pca.fit_transform(X)
 
 interactive_3d_plot(
     Xp,
     labels=concepts["preferred_term"].values,
-    color_values=D_snomed[0],     # colour by distance from first concept
+    color_values=D_snomed[0],     # colour by ontological distance from first concept
     colormap="Viridis",
-    point_size=3
+    point_size=3,
 )
 ```
 
@@ -188,8 +213,8 @@ D_snomed_lcc = D_snomed[np.ix_(lcc_mask, lcc_mask)]
 concepts_lcc = concepts[lcc_mask].reset_index(drop=True)
 
 A_lcc = knn_graph(X_lcc, k)
-DXm = dijkstra(A_lcc, return_predecessors=False)
-DXc = 1 - squareform(pdist(X_lcc, metric="cosine"))
+DXm   = dijkstra(A_lcc, return_predecessors=False)
+DXc   = 1 - squareform(pdist(X_lcc, metric="cosine"))
 ```
 
 ### 3d. Correlation plots
@@ -222,9 +247,9 @@ fig, ax = distance_plot(
 | Task | Reuse | Source |
 |---|---|---|
 | Concept retrieval | None — Snowstorm REST API | — |
+| Semantic tag filtering | None — REST API `semanticTag` param | — |
 | Ontological distances | None — new | — |
-| Embedding retrieval | None — Azure AI Search SDK | — |
-| `get_embeddings()` | Not needed — DB already exists | — |
+| `get_embeddings()` | Direct copy | `2-get_text_embeddings.ipynb` |
 | Normalisation | Direct copy | `3-reproduce_figures.ipynb` (colours section) |
 | `knn_graph()` | Direct import | `Representation-Manifolds/utils.py` |
 | `largest_connected_component()` | Direct import | `Representation-Manifolds/utils.py` |
@@ -235,8 +260,25 @@ fig, ax = distance_plot(
 
 ---
 
-## Open Questions
+## Deliverables
 
-1. What are the exact field names in the Azure AI Search index schema (`concept_id`, `embedding_vector`, etc.)?
-2. Which body system hierarchy to start with — confirm via snowstorm-azure MCP before running notebook
-3. What ECL depth filter gives a concept count in the 100–300 range for the chosen hierarchy?
+| Notebook | Purpose |
+|---|---|
+| `1-snomed-concept-selection.ipynb` | ECL query (disorder) → concept list + pairwise ontological distances |
+| `2-generate-embeddings.ipynb` | Embed preferred terms with text-embedding-3-large, normalise, save |
+| `3-geometric-analysis.ipynb` | PCA, k-NN, geodesic distances, correlation plots |
+
+---
+
+## Suggested First Experiment
+
+Start with **respiratory disorders** (`<< 50043002`), filtered to `disorder` semantic tag.
+This gives a clinically coherent body system with well-defined IS-A hierarchy structure.
+
+Use the snowstorm-azure MCP interactively first to confirm concept counts:
+
+```
+ecl_query("<< 50043002")     # total count
+ecl_query("<<2 50043002")    # within 2 levels — adjust depth to hit 100–300 disorders
+get_children("50043002")     # inspect top-level subcategories
+```
