@@ -282,3 +282,36 @@ ecl_query("<< 50043002")     # total count
 ecl_query("<<2 50043002")    # within 2 levels — adjust depth to hit 100–300 disorders
 get_children("50043002")     # inspect top-level subcategories
 ```
+
+---
+
+## Completed (2026-03-15)
+
+### Phase 1a — Hierarchy exploration (done)
+
+Ran snowstorm-azure MCP queries to find a hierarchy with 100–300 disorder concepts:
+
+| ECL | Approx. count | Verdict |
+|---|---|---|
+| `<< 50043002` (all respiratory) | 500+ | Too large |
+| `<< 128272009` (lower respiratory) | 350+ | Too large |
+| `<< 275498002` (respiratory infections) | 350+ | Too large |
+| `<< 195967001` (asthma) | ~115 | **Selected** |
+
+**Decision:** use `<< 195967001` (asthma) for the first experiment.
+
+### Notebooks created (done)
+
+- `1-snomed-concept-selection.ipynb` — fetches asthma disorders, computes pairwise ontological distances
+- `2-generate-embeddings.ipynb` — embeds preferred terms with `text-embedding-3-large`, normalises
+- `3-geometric-analysis.ipynb` — PCA, k-NN, geodesic distances, Pearson + Chatterjee correlation plots
+
+### Supporting files (done)
+
+- `data/` directory created
+- `utils.py` copied from `Reference_Papers/Representation-Manifolds/utils.py` to repo root
+- Notebook 3 updated to import `utils` directly (no `sys.path` hack)
+
+### Still to run
+
+Notebooks 1–3 in order (notebook 1 makes ~115 Snowstorm API calls for ancestor chains).
