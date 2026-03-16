@@ -118,9 +118,7 @@ def interactive_3d_plot(points, labels=None, color_values=None, title="", point_
         title=title
     )
 
-    fig.show()
-
-    return None
+    return fig
 
 
 
