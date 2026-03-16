@@ -205,7 +205,7 @@ def distance_plot(
             x = d
             y = np.mean(DX[i,DY[i,:] == d])
             if colors is None:
-                l = labels[i]
+                l = i  # numeric index for colormap normalisation
             else:
                 l = colors[i]
             xs.append(x)
