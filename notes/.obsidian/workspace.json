@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f82e84419c3f16c2",
+        "id": "c6822b6297982d36",
         "type": "tabs",
         "children": [
           {
-            "id": "3940ed1b9823b053",
+            "id": "760e5ee15c647d63",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cancer-subtype-counts.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "cancer-subtype-counts"
+              "title": "New tab"
             }
           }
         ]
@@ -78,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 223.5
   },
   "right": {
     "id": "afdce08d1475e421",
@@ -180,23 +176,36 @@
       "bases:Create new base": false
     }
   },
-  "active": "3940ed1b9823b053",
+  "active": "760e5ee15c647d63",
   "lastOpenFiles": [
+    "papers/2505_18235_the-origins-of-representation-manifolds-in-large-language-models.md",
+    "understanding/transformer-lens-sae-lens-pipeline.md",
+    "understanding/token-embedding-vs-text-embedding.md",
+    "understanding/sae-training-and-layer-representations.md",
+    "understanding/sae-token-matching-and-intervention.md",
+    "understanding/sae-overcomplete-dictionary.md",
+    "understanding/sae-clustering-and-manifold-geometry.md",
+    "understanding/prompt-structures-and-pipelines.md",
+    "understanding/pile-medical-corpus-and-sae-distribution.md",
+    "understanding/pile-corpus-and-usage.md",
+    "understanding/layer-selection-methodology.md",
+    "papers/2510_05049_keep-integrating-medical-ontologies-with-clinical-data-for-robust-code-embeddings.md",
+    "papers/2508_17953_understanding-subword-compositionality-of-large-language-models.md",
+    "papers/2505_20133_token-distillation-attention-aware-input-embeddings-for-new-tokens.md",
+    "papers/2502_13063_cramming-1568-tokens-into-a-single-vector-and-back-again.md",
+    "papers/2502_04397_medtok-multimodal-medical-code-tokenizer.md",
+    "papers/2412_07334_frame-representation-hypothesis-multi-token-llm-interpretability.md",
+    "papers/2412_06769_coconut-training-llms-to-reason-in-a-continuous-latent-space.md",
+    "papers/2410_05864_from-tokens-to-words-on-the-inner-lexicon-of-llms.md",
+    "papers/2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms.md",
+    "papers/2405_14860_not-all-lm-features-are-linear.md",
+    "papers/REFERENCES.md",
+    "snomed-hierarchy-counts.md",
+    "plot-colorschemes.md",
+    "plan-text-embedding-plot.md",
+    "plan-now.md",
     "plan-now.md.tmp.27662.1773612892744",
     "plan-now.md.tmp.27662.1773612886457",
-    "plan-text-embedding-plot.md",
-    "models.md",
-    "actions.md",
-    "papers/not-all-lm-features-are-linear.md",
-    "papers/origins-of-representation-manifolds.md",
-    "papers/sae-training-and-layer-representations.md",
-    "papers/sae-token-matching-and-intervention.md",
-    "papers/sae-overcomplete-dictionary.md",
-    "papers/layer-selection-methodology.md",
-    "plan-now.md",
-    "plan.md",
-    "cancer-subtype-counts.md",
-    "Untitled.base",
-    "goal.md"
+    "Untitled.base"
   ]
 }

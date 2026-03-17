@@ -1,3 +1,13 @@
+---
+title: Not All Language Model Features Are Linear
+id: 2405.14860
+author: Engels, Liao, Michaud, Gurnee, Tegmark
+publish_date: 2024-05
+url: https://arxiv.org/abs/2405.14860
+repo: https://github.com/Tauheed-Elahee/MultiDimensionalFeatures
+summary: Some LLM features are encoded as multi-dimensional circular manifolds (rings/helices) rather than 1D directions, demonstrated via SAE clustering on GPT-2 and Mistral-7B with causal validation.
+---
+
 # Not All Language Model Features Are Linear
 
 **Authors:** Joshua Engels, Isaac Liao, Eric J. Michaud, Wes Gurnee, Max Tegmark (MIT)

@@ -1,3 +1,13 @@
+---
+title: The Origins of Representation Manifolds in Large Language Models
+id: 2505.18235
+author: Modell, Rubin-Delanchy, et al.
+publish_date: 2025-05-23
+url: https://arxiv.org/abs/2505.18235
+repo: https://github.com/alexandermodell/Representation-Manifolds
+summary: Investigates why circular manifold representations emerge in LLMs, providing theoretical grounding for their formation using SAE activations from GPT-2 and Mistral-7B and text embeddings from text-embedding-3-large.
+---
+
 # The Origins of Representation Manifolds in Large Language Models
 
 **Repo:** `Reference_Papers/Representation-Manifolds`
