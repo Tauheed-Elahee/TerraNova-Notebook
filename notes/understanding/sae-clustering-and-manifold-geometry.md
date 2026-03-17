@@ -15,7 +15,7 @@ The clustering is **not** applied to token activations directly. It is applied t
 
 Because of superposition, no single SAE feature perfectly captures "days of the week." Instead, a **group** of features collectively encodes the concept — some may fire more strongly for "Monday" in scheduling contexts, others in narrative contexts, others when the day is the subject vs. object of a sentence. These features share similar decoder directions (they all point roughly toward the "day-of-week subspace"), which is why clustering by cosine similarity finds them.
 
-The papers report the specific SAE feature indices for each discovered cluster in GPT-2 (layer 7):
+The papers[^1][^2] report the specific SAE feature indices for each discovered cluster in GPT-2 (layer 7):
 
 - Days of week: 9 features — `[2592, 4445, 4663, 4733, 6531, 8179, 9566, 20927, 24185]`
 - Months of year: 16 features — `[3977, 4140, 5993, 7299, 9104, 9401, 10449, 11196, 12661, 14715, 17068, 17528, 19589, 21033, 22043, 23304]`
@@ -54,3 +54,8 @@ For SNOMED CT concepts run through structured prompts rather than the Pile, ther
 - **Controlled prompts** reduce context variation → fewer points per concept, less spread → the manifold may be less well-sampled
 - **Multiple prompt templates** per concept (e.g. 3–5 different sentence frames) partially compensate by introducing deliberate variation in context
 - The absence of a clustering step (since concepts are targeted directly rather than discovered) means the relevant SAE features must either be identified in advance or the full SAE encoding used directly for geometric analysis
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

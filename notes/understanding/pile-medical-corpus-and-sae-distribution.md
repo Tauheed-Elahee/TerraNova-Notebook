@@ -53,7 +53,7 @@ The weights are fixed. Any activation vector can be passed through it regardless
 
 ### Why the Pile appears at two stages in the papers
 
-The Pile is used at two points in the papers' pipeline, but for completely different reasons:
+The Pile is used at two points in the papers' pipeline[^1][^2], but for completely different reasons:
 
 | Stage | Why the Pile is used | Required? |
 |---|---|---|
@@ -80,3 +80,8 @@ The Pile is not needed at all. The workflow is:
 3. Pass those activations through the SAE encoder
 
 The SAE will encode them. The Pile was the papers' source of text to find natural token occurrences — it has no special status in the SAE itself.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

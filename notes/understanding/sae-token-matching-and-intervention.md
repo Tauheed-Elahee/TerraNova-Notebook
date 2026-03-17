@@ -17,7 +17,7 @@ for token, activation in zip(tokens, activations):
 
 This produces a lookup: **for each dictionary feature, which tokens caused it to fire?**
 
-If feature #4445 consistently activates on "Monday", "Tuesday", "Wednesday" and rarely anything else — it gets labelled a "day of week" feature. This is the basis of all interpretability claims in Engels et al.
+If feature #4445 consistently activates on "Monday", "Tuesday", "Wednesday" and rarely anything else — it gets labelled a "day of week" feature. This is the basis of all interpretability claims in Engels et al.[^1]
 
 In the repo, `sae_multid_feature_discovery/generate_feature_occurrence_data.py` performs exactly this step.
 
@@ -78,3 +78,7 @@ Engels et al. used exactly this approach — rotating activations around the cir
 ### Limitation
 
 Reconstruction error accumulates if you hook SAEs into multiple layers simultaneously. In practice, researchers hook into **one layer at a time**.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]

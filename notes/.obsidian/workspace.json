@@ -4,17 +4,31 @@
     "type": "split",
     "children": [
       {
-        "id": "c6822b6297982d36",
+        "id": "ad86aaeca893e53e",
         "type": "tabs",
         "children": [
           {
-            "id": "760e5ee15c647d63",
+            "id": "ba9978a1bae1257a",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "understanding/sae-clustering-and-manifold-geometry.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "sae-clustering-and-manifold-geometry"
             }
           }
         ]
@@ -74,7 +88,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 223.5
+    "width": 261.5
   },
   "right": {
     "id": "afdce08d1475e421",
@@ -176,8 +190,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "760e5ee15c647d63",
+  "active": "ba9978a1bae1257a",
   "lastOpenFiles": [
+    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708609379",
+    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708603601",
+    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708598534",
+    "understanding/pile-medical-corpus-and-sae-distribution.md",
+    "understanding/pile-corpus-and-usage.md",
+    "understanding/layer-selection-methodology.md",
+    "papers/2405_14860_not-all-lm-features-are-linear.md",
     "papers/2505_18235_the-origins-of-representation-manifolds-in-large-language-models.md",
     "understanding/transformer-lens-sae-lens-pipeline.md",
     "understanding/token-embedding-vs-text-embedding.md",
@@ -186,9 +207,6 @@
     "understanding/sae-overcomplete-dictionary.md",
     "understanding/sae-clustering-and-manifold-geometry.md",
     "understanding/prompt-structures-and-pipelines.md",
-    "understanding/pile-medical-corpus-and-sae-distribution.md",
-    "understanding/pile-corpus-and-usage.md",
-    "understanding/layer-selection-methodology.md",
     "papers/2510_05049_keep-integrating-medical-ontologies-with-clinical-data-for-robust-code-embeddings.md",
     "papers/2508_17953_understanding-subword-compositionality-of-large-language-models.md",
     "papers/2505_20133_token-distillation-attention-aware-input-embeddings-for-new-tokens.md",
@@ -198,12 +216,10 @@
     "papers/2412_06769_coconut-training-llms-to-reason-in-a-continuous-latent-space.md",
     "papers/2410_05864_from-tokens-to-words-on-the-inner-lexicon-of-llms.md",
     "papers/2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms.md",
-    "papers/2405_14860_not-all-lm-features-are-linear.md",
     "papers/REFERENCES.md",
     "snomed-hierarchy-counts.md",
     "plot-colorschemes.md",
     "plan-text-embedding-plot.md",
-    "plan-now.md",
     "plan-now.md.tmp.27662.1773612892744",
     "plan-now.md.tmp.27662.1773612886457",
     "Untitled.base"

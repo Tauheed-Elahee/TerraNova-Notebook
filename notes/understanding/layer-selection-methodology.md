@@ -1,6 +1,6 @@
 # Layer Selection: GPT-2 Layer 7 & Mistral-7B Layer 8
 
-Notes on how Engels et al. (2025) arrived at these specific layers.
+Notes on how Engels et al.[^1] arrived at these specific layers.
 
 ## Short Answer
 
@@ -53,3 +53,7 @@ PCA projections of hidden states across prompts were inspected at various layers
 ## Key Takeaway
 
 For GPT-2, layer 7 was found by exhaustive search. For Mistral, layer 8 was the earliest of three feasible layers and happened to contain the strongest signal. Neither was chosen by prior hypothesis.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]

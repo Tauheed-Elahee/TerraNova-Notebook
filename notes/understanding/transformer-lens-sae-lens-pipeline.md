@@ -68,8 +68,10 @@ Text corpus
             → SAELens trains one SAE per layer
                 → Each SAE produces a dictionary of feature vectors  [d_hidden, d_model]
                     → Post-hoc: run SAE on labeled corpus to match features → tokens
-                        → Engels et al.: cosine similarity clustering on decoder vectors
+                        → Engels et al.[^1]: cosine similarity clustering on decoder vectors
 ```
+
+Modell et al.[^2] reuse the pre-computed activations from this pipeline directly (Part 1 of their paper), extending it with text embeddings from `text-embedding-3-large` to investigate why the manifold structures arise.
 
 ---
 
@@ -78,6 +80,13 @@ Text corpus
 | Model | Layers with SAEs | Source |
 |---|---|---|
 | GPT-2 | All 12 layers | Bloom (2024), pre-trained and publicly available |
-| Mistral-7B | Layers 8, 16, 24 only | Engels et al. trained these themselves |
+| Mistral-7B | Layers 8, 16, 24 only | Engels et al.[^1] trained these themselves |
+
+Both sets of activations are reused without modification by Modell et al.[^2]
 
 This asymmetry is why GPT-2 layer selection was exhaustive and Mistral layer selection was "best of three" (see `layer-selection-methodology.md`).
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

@@ -33,7 +33,7 @@ Activations were extracted at the `<StartDay>` or `<StartMonth>` token position,
 Neither paper used multi-token terms in the SAE or intervention pipelines. The two concept sets that contain multi-token names — colours ("dark blue") and dates ("1st January") — were handled via a completely separate pipeline using `text-embedding-3-large` from the OpenAI API. The embedding vector returned by the API was used directly as the concept representation, skipping TransformerLens and SAELens entirely.
 
 ### Two activation regimes, same result
-The SAE pipeline (organic corpus occurrences, no prompt) and the intervention pipeline (arithmetic prompts, causally active token) are fundamentally different activation regimes — yet both produced circular/manifold geometry for the same concepts. This suggests the geometric structure is a robust property of how the model represents these concepts, not an artefact of a particular prompting strategy.
+The SAE pipeline (organic corpus occurrences, no prompt) and the intervention pipeline (arithmetic prompts, causally active token) are fundamentally different activation regimes — yet both produced circular/manifold geometry for the same concepts.[^1][^2] This suggests the geometric structure is a robust property of how the model represents these concepts, not an artefact of a particular prompting strategy.
 
 ---
 
@@ -42,3 +42,8 @@ The SAE pipeline (organic corpus occurrences, no prompt) and the intervention pi
 The existing `text-embedding-3-large` database of SNOMED CT concepts maps directly onto the colours/dates pipeline — the embedding vectors can be fed straight into the geometric analysis (normalise → PCA → k-NN → Dijkstra → Chatterjee correlation) without any LLM forward passes.
 
 An open question is whether arithmetic-style prompts analogous to the intervention pipeline (e.g. `"The parent disorder of {concept} is"`) and running through the SAE pipeline would yield richer or different geometry compared to the text embedding approach — and whether the two can be directly compared on the same concept set.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

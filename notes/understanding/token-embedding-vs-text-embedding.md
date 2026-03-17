@@ -51,4 +51,9 @@ A completely separate model, purpose-built to produce **sentence/phrase-level se
 
 ## Role in This Project
 
-The `text-embedding-3-large` database of SNOMED CT concepts acts as a **semantic oracle** — a clean reference for what the geometric relationships between medical concepts *should* look like. The research question becomes: at which layer of the LLM does the residual stream geometry most closely match this oracle, and does either align with the SNOMED CT ontological distances?
+The `text-embedding-3-large` database of SNOMED CT concepts acts as a **semantic oracle** — a clean reference for what the geometric relationships between medical concepts *should* look like. The research question becomes: at which layer of the LLM does the residual stream geometry most closely match this oracle, and does either align with the SNOMED CT ontological distances?[^1][^2]
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

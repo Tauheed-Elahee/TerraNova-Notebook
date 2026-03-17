@@ -13,7 +13,7 @@ The Pile is a large open-source text dataset assembled by EleutherAI, comprising
 | Reference | Wikipedia, DM Mathematics |
 | Other | HackerNews, YouTube subtitles, Enron Emails, USPTO patents |
 
-The papers use the **uncopyrighted subset**, streamed directly from HuggingFace without a full local download:
+The papers[^1][^2] use the **uncopyrighted subset**, streamed directly from HuggingFace without a full local download:
 
 ```python
 data = hf_dataset_to_generator("monology/pile-uncopyrighted")
@@ -90,3 +90,8 @@ For SNOMED CT concepts:
 - Context is highly variable and domain-dependent
 
 The practical alternative is to use **structured prompts** (e.g. `"The patient was diagnosed with {concept}."`) which give controlled, consistent context and guarantee one activation per concept regardless of corpus frequency.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
+[^2]: A. Modell et al., "The Origins of Representation Manifolds in Large Language Models," arXiv:2505.18235, 2025. [[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|↗]]

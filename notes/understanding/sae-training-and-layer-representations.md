@@ -59,4 +59,8 @@ Paulo & Belrose (2025) — *"Sparse Autoencoders Trained on the Same Data Learn 
 
 ## Implication for Engels et al.
 
-This is why Engels et al. focus on the **subspace** spanned by a cluster of features rather than any individual feature direction. The circular geometry (the ring of month vectors) is more stable than any single dictionary element — the subspace is what the model actually uses, while the specific SAE basis within it is somewhat arbitrary.
+This is why Engels et al.[^1] focus on the **subspace** spanned by a cluster of features rather than any individual feature direction. The circular geometry (the ring of month vectors) is more stable than any single dictionary element — the subspace is what the model actually uses, while the specific SAE basis within it is somewhat arbitrary.
+
+---
+
+[^1]: J. Engels, I. Liao, E. J. Michaud, W. Gurnee, and M. Tegmark, "Not All Language Model Features Are Linear," in *Proc. ICLR*, 2025. [[2405_14860_not-all-lm-features-are-linear|↗]]
