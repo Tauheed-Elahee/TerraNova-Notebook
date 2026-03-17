@@ -1,3 +1,10 @@
+---
+title: The Pile Corpus — What It Is and How the Papers Use It
+tags: [corpus, pile, SAE, token-filtering, medical, SNOMED]
+summary: What the Pile is, how the papers stream it to collect SAE feature activations at scale, how token filtering works post-hoc, and why this approach does not transfer to multi-token medical concepts.
+papers: [2405.14860, 2505.18235]
+---
+
 # The Pile Corpus — What It Is and How the Papers Use It
 
 ## What the Pile Is

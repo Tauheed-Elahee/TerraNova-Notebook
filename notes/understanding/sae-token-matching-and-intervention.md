@@ -1,3 +1,10 @@
+---
+title: SAE Token Matching & Intervention
+tags: [SAE, token-matching, intervention, causal-validation, mechanistic-interpretability]
+summary: How SAE features are post-hoc matched to tokens by running the encoder on a labelled corpus, and how hooking SAEs into the residual stream at inference time enables both inspection and causal intervention by rotating feature activations.
+papers: [2405.14860]
+---
+
 # SAE Token Matching & Intervention
 
 ## Does the SAE Match Activations to Tokens?

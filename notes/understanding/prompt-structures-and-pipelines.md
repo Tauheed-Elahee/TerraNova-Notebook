@@ -1,3 +1,10 @@
+---
+title: Prompt Structures and Pipelines Across Both Papers
+tags: [prompts, pipeline, SAE, text-embedding, intervention, multi-token, SNOMED]
+summary: Full experiment table of prompt strategies used across both papers — raw Pile corpus for SAE reconstruction, arithmetic prompts for causal intervention, and OpenAI API for multi-token concepts — and implications for medical concept analysis.
+papers: [2405.14860, 2505.18235]
+---
+
 # Prompt Structures and Pipelines Across Both Papers
 
 ## Full Experiment Table

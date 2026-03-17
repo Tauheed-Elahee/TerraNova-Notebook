@@ -1,3 +1,10 @@
+---
+title: SAE Overcomplete Dictionaries
+tags: [SAE, superposition, dictionary, sparsity, mechanistic-interpretability]
+summary: Why SAE hidden dimensions greatly exceed model dimensions — the superposition hypothesis predicts LLMs pack thousands of features into fewer dimensions, and an overcomplete sparse dictionary unpacks them into one concept per direction.
+papers: [2405.14860]
+---
+
 # SAE Overcomplete Dictionaries
 
 ## Why SAE Dimensions >> Model Dimensions

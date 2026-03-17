@@ -1,3 +1,10 @@
+---
+title: "TransformerLens & SAELens: Activation Extraction and SAE Training Pipeline"
+tags: [pipeline, transformer-lens, sae-lens, activations, GPT-2, Mistral]
+summary: Step-by-step pipeline for extracting per-layer residual stream activations with TransformerLens and training sparse autoencoders with SAELens, including model and layer coverage for GPT-2 and Mistral-7B.
+papers: [2405.14860, 2505.18235]
+---
+
 # TransformerLens & SAELens: Activation Extraction and SAE Training Pipeline
 
 ## Tools

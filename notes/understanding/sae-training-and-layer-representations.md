@@ -1,3 +1,10 @@
+---
+title: SAE Training & Layer-Wise Representations
+tags: [SAE, training, layers, residual-stream, sparsity]
+summary: How sparse autoencoders are trained on anonymous activation vectors to decompose LLM hidden states into interpretable feature dictionaries, and why the same concept's representation differs across layers.
+papers: [2405.14860]
+---
+
 # SAE Training & Layer-Wise Representations
 
 ## What Training an SAE Means

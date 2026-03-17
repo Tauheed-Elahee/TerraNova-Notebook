@@ -1,3 +1,10 @@
+---
+title: Medical Corpora, the Pile, and SAE Distribution
+tags: [corpus, SAE, distribution, medical, pile, prompts]
+summary: Whether a medical corpus can replace the Pile for SAE feature extraction, why distribution mismatch matters at two levels, and why structured English prompts are the better fit for GPT-2 with Bloom SAEs.
+papers: [2405.14860, 2505.18235]
+---
+
 # Medical Corpora, the Pile, and SAE Distribution
 
 ## Could a Medical Corpus Replace the Pile?

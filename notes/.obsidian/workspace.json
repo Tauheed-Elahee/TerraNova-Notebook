@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "understanding/sae-clustering-and-manifold-geometry.md",
+                "file": "understanding/layer-wise-geometry-and-detokenization-phase-transition.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "sae-clustering-and-manifold-geometry"
+              "title": "layer-wise-geometry-and-detokenization-phase-transition"
             }
           }
         ]
@@ -192,36 +192,41 @@
   },
   "active": "ba9978a1bae1257a",
   "lastOpenFiles": [
-    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708609379",
-    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708603601",
-    "understanding/transformer-lens-sae-lens-pipeline.md.tmp.141829.1773708598534",
-    "understanding/pile-medical-corpus-and-sae-distribution.md",
-    "understanding/pile-corpus-and-usage.md",
-    "understanding/layer-selection-methodology.md",
-    "papers/2405_14860_not-all-lm-features-are-linear.md",
-    "papers/2505_18235_the-origins-of-representation-manifolds-in-large-language-models.md",
+    "reorganize.md.tmp.141829.1773710551729",
+    "reorganize.md",
+    "papers/2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms.md",
     "understanding/transformer-lens-sae-lens-pipeline.md",
     "understanding/token-embedding-vs-text-embedding.md",
     "understanding/sae-training-and-layer-representations.md",
-    "understanding/sae-token-matching-and-intervention.md",
-    "understanding/sae-overcomplete-dictionary.md",
-    "understanding/sae-clustering-and-manifold-geometry.md",
+    "understanding/pile-medical-corpus-and-sae-distribution.md",
+    "understanding/layer-selection-methodology.md",
+    "understanding/layer-wise-geometry-and-detokenization-phase-transition.md",
+    "understanding/multi-token-medical-terms-and-detokenization.md",
+    "understanding/pile-corpus-and-usage.md",
     "understanding/prompt-structures-and-pipelines.md",
+    "understanding/single-vector-concept-representations-as-transformer-inputs.md",
+    "understanding/sae-token-matching-and-intervention.md",
+    "understanding/sae-clustering-and-manifold-geometry.md",
+    "understanding/layer-wise-geometry-and-detokenization-phase-transition.md.tmp.141829.1773709421907",
+    "understanding/single-vector-concept-representations-as-transformer-inputs.md.tmp.141829.1773709408417",
+    "understanding/subword-composition-strategies-for-concept-extraction.md",
+    "understanding/subword-composition-strategies-for-concept-extraction.md.tmp.141829.1773709394727",
+    "understanding/multi-token-medical-terms-and-detokenization.md.tmp.141829.1773709384483",
+    "understanding/prompt-structures-and-pipelines.md.tmp.141829.1773709175512",
+    "understanding/token-embedding-vs-text-embedding.md.tmp.141829.1773709173927",
+    "understanding/sae-clustering-and-manifold-geometry.md.tmp.141829.1773709171858",
+    "understanding/sae-overcomplete-dictionary.md.tmp.141829.1773709170218",
+    "understanding/sae-token-matching-and-intervention.md.tmp.141829.1773709168507",
+    "understanding/pile-corpus-and-usage.md.tmp.141829.1773709166374",
+    "papers/2405_14860_not-all-lm-features-are-linear.md",
+    "papers/2505_18235_the-origins-of-representation-manifolds-in-large-language-models.md",
+    "understanding/sae-overcomplete-dictionary.md",
     "papers/2510_05049_keep-integrating-medical-ontologies-with-clinical-data-for-robust-code-embeddings.md",
     "papers/2508_17953_understanding-subword-compositionality-of-large-language-models.md",
     "papers/2505_20133_token-distillation-attention-aware-input-embeddings-for-new-tokens.md",
     "papers/2502_13063_cramming-1568-tokens-into-a-single-vector-and-back-again.md",
     "papers/2502_04397_medtok-multimodal-medical-code-tokenizer.md",
     "papers/2412_07334_frame-representation-hypothesis-multi-token-llm-interpretability.md",
-    "papers/2412_06769_coconut-training-llms-to-reason-in-a-continuous-latent-space.md",
-    "papers/2410_05864_from-tokens-to-words-on-the-inner-lexicon-of-llms.md",
-    "papers/2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms.md",
-    "papers/REFERENCES.md",
-    "snomed-hierarchy-counts.md",
-    "plot-colorschemes.md",
-    "plan-text-embedding-plot.md",
-    "plan-now.md.tmp.27662.1773612892744",
-    "plan-now.md.tmp.27662.1773612886457",
-    "Untitled.base"
+    "papers/2412_06769_coconut-training-llms-to-reason-in-a-continuous-latent-space.md"
   ]
 }

@@ -1,3 +1,10 @@
+---
+title: SAE Clustering and Manifold Geometry
+tags: [SAE, clustering, manifold, geometry, cosine-similarity, context-variation]
+summary: How cosine similarity clustering of SAE decoder vectors reveals multi-dimensional feature clusters, and why context variation across corpus occurrences produces continuous manifold geometry rather than discrete blobs.
+papers: [2405.14860, 2505.18235]
+---
+
 # SAE Clustering and Manifold Geometry
 
 ## What is Being Clustered

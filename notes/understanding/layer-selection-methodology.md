@@ -1,3 +1,10 @@
+---
+title: "Layer Selection: GPT-2 Layer 7 & Mistral-7B Layer 8"
+tags: [SAE, layer-selection, GPT-2, Mistral, methodology]
+summary: How Engels et al. arrived at GPT-2 layer 7 and Mistral-7B layer 8 through SAE availability constraints and empirical irreducibility scoring rather than prior theoretical criteria.
+papers: [2405.14860]
+---
+
 # Layer Selection: GPT-2 Layer 7 & Mistral-7B Layer 8
 
 Notes on how Engels et al.[^1] arrived at these specific layers.

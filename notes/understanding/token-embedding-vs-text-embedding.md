@@ -1,3 +1,10 @@
+---
+title: Token Embedding Layer vs text-embedding-3-large
+tags: [embeddings, tokenization, text-embedding, LLM, SNOMED, semantic-oracle]
+summary: The fundamental difference between per-token embedding lookup tables inside LLMs and the sentence-level text-embedding-3-large model, and the role of the latter as a semantic oracle for SNOMED CT concept geometry.
+papers: [2405.14860, 2505.18235]
+---
+
 # Token Embedding Layer vs text-embedding-3-large
 
 No LLM uses `text-embedding-3-large` internally — including OpenAI's own models. They are fundamentally different systems built for different purposes.
