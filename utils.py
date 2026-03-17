@@ -101,11 +101,11 @@ def interactive_3d_plot(points, labels=None, color_values=None, title="", point_
         mode='markers',
         marker=dict(
             size=point_size,
-            color=color_values,  # Color by the Y values
+            color=color_values,  # Color by concept value (e.g. ontological distance)
             colorscale=colormap,
             opacity=opacity
         ),
-        text=labels,  # Add statements for hover text
+        text=labels,  # SNOMED preferred term shown on hover
         hoverinfo='text',
     )])
 
@@ -198,7 +198,7 @@ def distance_plot(
 
     xs = []
     ys = []
-    ls = []
+    color_vals = []
     ns = []
     for i in range(len(DY)):
         for d in np.unique(DY[i,:]):
@@ -210,28 +210,28 @@ def distance_plot(
                 l = colors[i]
             xs.append(x)
             ys.append(y)
-            ls.append(l)
+            color_vals.append(l)
 
     xs = np.array(xs)
     ys = np.array(ys)
-    ls = np.array(ls)
+    color_vals = np.array(color_vals)
 
     # shuffle the data
     random_indices = np.random.permutation(len(xs))
     xs = xs[random_indices]
     ys = ys[random_indices]
-    ls = ls[random_indices]
+    color_vals = color_vals[random_indices]
 
     if colors is None:
-        norm = plt.Normalize(min(ls), max(ls))
-        rgb_colors = cmap(norm(ls))
+        norm = plt.Normalize(min(color_vals), max(color_vals))
+        mapped_colors = cmap(norm(color_vals))
 
-        plt_colors = []
-        for r, g, b, a in rgb_colors:
-            plt_colors.append(rgb_to_hex((r, g, b)))
-        plt_colors = np.array(plt_colors)
+        hex_colors = []
+        for r, g, b, a in mapped_colors:
+            hex_colors.append(rgb_to_hex((r, g, b)))
+        hex_colors = np.array(hex_colors)
     else:
-        plt_colors = ls
+        hex_colors = color_vals
 
     # compute the correlation
     if corr_coef == 'pearson':
@@ -252,7 +252,7 @@ def distance_plot(
         xs, ys, alpha=0.1, marker_size=0.1,
         xlabel=xlabel,
         ylabel=ylabel,
-        colors = plt_colors,
+        colors = hex_colors,
         y_min=min(ys),
         text_box = corr_txt,
         figsize=(3.5,3.5),
