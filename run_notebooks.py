@@ -7,10 +7,13 @@ directory (so relative paths such as data/ resolve correctly), output is written
 to a temporary file, then converted to HTML via nbconvert with code cells hidden.
 
 Results are written to output/<notebook-stem>.html (sibling of the notebook) by default.
+Data files are read/written from data/ (sibling of the notebook) by default; override with
+--data-dir to share a single data directory across all notebooks.
 
 Usage:
     python3 run_notebooks.py notebook.ipynb [notebook2.ipynb ...]
     python3 run_notebooks.py --output-dir path/to/dir notebook.ipynb
+    python3 run_notebooks.py --data-dir path/to/data notebook.ipynb
 
 exit codes:
   0   All notebooks succeeded
@@ -24,7 +27,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-def run_notebook(path: Path, output_dir: Path | None) -> bool:
+def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
     resolved_output_dir = (output_dir or path.parent / "output").resolve()
     resolved_output_dir.mkdir(parents=True, exist_ok=True)
@@ -36,11 +39,12 @@ def run_notebook(path: Path, output_dir: Path | None) -> bool:
     try:
         print(f"\n[{path.name}]")
 
+        cmd = ["papermill", str(path.resolve()), str(tmp_path)]
+        if data_dir is not None:
+            cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
+
         print(f"  papermill: executing...")
-        result = subprocess.run(
-            ["papermill", str(path.resolve()), str(tmp_path)],
-            cwd=path.parent.resolve(),
-        )
+        result = subprocess.run(cmd, cwd=path.parent.resolve())
         if result.returncode != 0:
             print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
             return False
@@ -79,6 +83,10 @@ def main():
         "--output-dir", type=Path, default=None,
         help="Directory to write HTML output (default: output/ next to each notebook)",
     )
+    parser.add_argument(
+        "--data-dir", type=Path, default=None,
+        help="Data directory for all notebooks (default: data/ next to each notebook)",
+    )
     args = parser.parse_args()
 
     for path in args.notebooks:
@@ -88,7 +96,7 @@ def main():
 
     ok = True
     for path in args.notebooks:
-        if not run_notebook(path, args.output_dir):
+        if not run_notebook(path, args.output_dir, args.data_dir):
             ok = False
 
     sys.exit(0 if ok else 1)
