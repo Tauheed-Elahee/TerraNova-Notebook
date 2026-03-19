@@ -1,5 +1,6 @@
 **.ipynb_checkpoints**
 data/**
+output/**
 __pycache__/**
 memory/**
 notes/.obsidian/**
