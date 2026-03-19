@@ -22,7 +22,7 @@ from pathlib import Path
 
 def run_notebook(path: Path, output_dir: Path) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
-    out_html = output_dir / f"{path.stem}.html"
+    out_html = (output_dir / f"{path.stem}.html").resolve()
 
     with tempfile.NamedTemporaryFile(suffix=".ipynb", delete=False) as tmp:
         tmp_path = Path(tmp.name)
@@ -33,12 +33,9 @@ def run_notebook(path: Path, output_dir: Path) -> bool:
         print(f"  papermill: executing...")
         result = subprocess.run(
             ["papermill", str(path), str(tmp_path)],
-            capture_output=True,
-            text=True,
         )
         if result.returncode != 0:
-            print(f"  ERROR: papermill failed", file=sys.stderr)
-            print(result.stderr, file=sys.stderr)
+            print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
             return False
 
         print(f"  nbconvert: converting to HTML...")
