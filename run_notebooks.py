@@ -6,7 +6,7 @@ Each notebook is executed by papermill with its own directory as the working
 directory (so relative paths such as data/ resolve correctly), output is written
 to a temporary file, then converted to HTML via nbconvert with code cells hidden.
 
-Results are written to notes/experiments/<notebook-stem>.html by default.
+Results are written to output/<notebook-stem>.html (sibling of the notebook) by default.
 
 Usage:
     python3 run_notebooks.py notebook.ipynb [notebook2.ipynb ...]
@@ -24,9 +24,11 @@ import sys
 import tempfile
 from pathlib import Path
 
-def run_notebook(path: Path, output_dir: Path) -> bool:
+def run_notebook(path: Path, output_dir: Path | None) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
-    out_html = (output_dir / f"{path.stem}.html").resolve()
+    resolved_output_dir = (output_dir or path.parent / "output").resolve()
+    resolved_output_dir.mkdir(parents=True, exist_ok=True)
+    out_html = resolved_output_dir / f"{path.stem}.html"
 
     with tempfile.NamedTemporaryFile(suffix=".ipynb", delete=False) as tmp:
         tmp_path = Path(tmp.name)
@@ -74,9 +76,8 @@ def main():
     )
     parser.add_argument("notebooks", nargs="+", type=Path, metavar="NOTEBOOK")
     parser.add_argument(
-        "--output-dir", type=Path,
-        default=Path(__file__).parent / "notes" / "experiments",
-        help="Directory to write HTML output (default: notes/experiments/)",
+        "--output-dir", type=Path, default=None,
+        help="Directory to write HTML output (default: output/ next to each notebook)",
     )
     args = parser.parse_args()
 
@@ -84,8 +85,6 @@ def main():
         if not path.exists():
             print(f"ERROR: {path} not found", file=sys.stderr)
             sys.exit(2)
-
-    args.output_dir.mkdir(parents=True, exist_ok=True)
 
     ok = True
     for path in args.notebooks:
