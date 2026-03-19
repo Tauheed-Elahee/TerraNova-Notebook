@@ -2,11 +2,15 @@
 """
 run_notebooks.py — Execute Jupyter notebooks with papermill and export as HTML.
 
-Each notebook is executed in-place by papermill, then converted to HTML via
-nbconvert. Results are written to notes/experiments/<notebook-stem>.html.
+Each notebook is executed by papermill with its own directory as the working
+directory (so relative paths such as data/ resolve correctly), output is written
+to a temporary file, then converted to HTML via nbconvert with code cells hidden.
+
+Results are written to notes/experiments/<notebook-stem>.html by default.
 
 Usage:
     python3 run_notebooks.py notebook.ipynb [notebook2.ipynb ...]
+    python3 run_notebooks.py --output-dir path/to/dir notebook.ipynb
 
 exit codes:
   0   All notebooks succeeded
@@ -32,7 +36,8 @@ def run_notebook(path: Path, output_dir: Path) -> bool:
 
         print(f"  papermill: executing...")
         result = subprocess.run(
-            ["papermill", str(path), str(tmp_path)],
+            ["papermill", str(path.resolve()), str(tmp_path)],
+            cwd=path.parent.resolve(),
         )
         if result.returncode != 0:
             print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
