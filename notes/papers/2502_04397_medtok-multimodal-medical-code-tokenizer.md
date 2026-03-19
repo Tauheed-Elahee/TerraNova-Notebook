@@ -4,6 +4,7 @@ id: 2502.04397
 author: Su, Messica, Huang, Johnson, Fesser, Gao, Sahneh, Zitnik
 publish_date: 2025-02-06
 url: https://arxiv.org/abs/2502.04397
+repo: https://github.com/mims-harvard/MedTok
 summary: Encodes each medical code (SNOMED CT, ICD, ATC) as a single dense vector using both text description and ontological graph position, replacing BPE tokenization as a plug-and-play component for transformer EHR models.
 ---
 
