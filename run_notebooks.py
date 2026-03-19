@@ -10,10 +10,14 @@ Results are written to output/<notebook-stem>.html (sibling of the notebook) by 
 Data files are read/written from data/ (sibling of the notebook) by default; override with
 --data-dir to share a single data directory across all notebooks.
 
+Use --workspace-dir to set a common parent for both data/ and output/ at once.
+Explicit --data-dir or --output-dir take precedence over --workspace-dir.
+
 Usage:
     python3 run_notebooks.py notebook.ipynb [notebook2.ipynb ...]
     python3 run_notebooks.py --output-dir path/to/dir notebook.ipynb
     python3 run_notebooks.py --data-dir path/to/data notebook.ipynb
+    python3 run_notebooks.py --workspace-dir path/to/ws notebook.ipynb
 
 exit codes:
   0   All notebooks succeeded
@@ -87,7 +91,24 @@ def main():
         "--data-dir", type=Path, default=None,
         help="Data directory for all notebooks (default: data/ next to each notebook)",
     )
+    parser.add_argument(
+        "--workspace-dir", type=Path, default=None,
+        help="Common parent for data/ and output/ (shorthand for --data-dir <ws>/data --output-dir <ws>/output)",
+    )
     args = parser.parse_args()
+
+    if args.workspace_dir is not None:
+        args.workspace_dir = args.workspace_dir.resolve()
+    if args.data_dir is not None:
+        args.data_dir = args.data_dir.resolve()
+    if args.output_dir is not None:
+        args.output_dir = args.output_dir.resolve()
+
+    if args.workspace_dir is not None:
+        if args.data_dir is None:
+            args.data_dir = args.workspace_dir / "data"
+        if args.output_dir is None:
+            args.output_dir = args.workspace_dir / "output"
 
     for path in args.notebooks:
         if not path.exists():
