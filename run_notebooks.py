@@ -97,18 +97,13 @@ def main():
     )
     args = parser.parse_args()
 
-    if args.workspace_dir is not None:
-        args.workspace_dir = args.workspace_dir.resolve()
-    if args.data_dir is not None:
-        args.data_dir = args.data_dir.resolve()
-    if args.output_dir is not None:
-        args.output_dir = args.output_dir.resolve()
+    for attr in ("workspace_dir", "data_dir", "output_dir"):
+        if given_path := getattr(args, attr):
+            setattr(args, attr, given_path.resolve())
 
-    if args.workspace_dir is not None:
-        if args.data_dir is None:
-            args.data_dir = args.workspace_dir / "data"
-        if args.output_dir is None:
-            args.output_dir = args.workspace_dir / "output"
+    if workspace := args.workspace_dir:
+        args.data_dir   = args.data_dir   or workspace / "data"
+        args.output_dir = args.output_dir or workspace / "output"
 
     for path in args.notebooks:
         if not path.exists():
