@@ -43,7 +43,7 @@ def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None) -> 
     try:
         print(f"\n[{path.name}]")
 
-        cmd = ["papermill", str(path.resolve()), str(tmp_path)]
+        cmd = ["papermill", "--log-output", str(path.resolve()), str(tmp_path)]
         if data_dir is not None:
             cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
 
