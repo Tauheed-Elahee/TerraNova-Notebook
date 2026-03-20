@@ -6,7 +6,8 @@ Each notebook is executed by papermill with its own directory as the working
 directory (so relative paths such as data/ resolve correctly), output is written
 to a temporary file, then converted to HTML via nbconvert with code cells hidden.
 
-Results are written to output/<notebook-stem>.html (sibling of the notebook) by default.
+Results are written to output/notebooks/<notebook-stem>.ipynb and output/html/<notebook-stem>.html
+(sibling of the notebook) by default.
 Data files are read/written from data/ (sibling of the notebook) by default; override with
 --data-dir to share a single data directory across all notebooks.
 
@@ -28,53 +29,51 @@ exit codes:
 import argparse
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
     resolved_output_dir = (output_dir or path.parent / "output").resolve()
-    resolved_output_dir.mkdir(parents=True, exist_ok=True)
-    out_html = resolved_output_dir / f"{path.stem}.html"
+    nb_dir   = resolved_output_dir / "notebooks"
+    html_dir = resolved_output_dir / "html"
+    nb_dir.mkdir(parents=True, exist_ok=True)
+    html_dir.mkdir(parents=True, exist_ok=True)
 
-    with tempfile.NamedTemporaryFile(suffix=".ipynb", delete=False) as tmp:
-        tmp_path = Path(tmp.name)
+    out_nb   = nb_dir   / f"{path.stem}.ipynb"
+    out_html = html_dir / f"{path.stem}.html"
 
-    try:
-        print(f"\n[{path.name}]")
+    print(f"\n[{path.name}]")
 
-        cmd = ["papermill", "--log-output", str(path.resolve()), str(tmp_path)]
-        if data_dir is not None:
-            cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
+    cmd = ["papermill", "--log-output", str(path.resolve()), str(out_nb)]
+    if data_dir is not None:
+        cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
 
-        print(f"  papermill: executing...")
-        result = subprocess.run(cmd, cwd=path.parent.resolve())
-        if result.returncode != 0:
-            print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
-            return False
+    print(f"  papermill: executing...")
+    result = subprocess.run(cmd, cwd=path.parent.resolve())
+    if result.returncode != 0:
+        print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
+        return False
 
-        print(f"  nbconvert: converting to HTML...")
-        result = subprocess.run(
-            [
-                "jupyter", "nbconvert",
-                "--to", "html",
-                "--no-input",
-                "--output", str(out_html),
-                str(tmp_path),
-            ],
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode != 0:
-            print(f"  ERROR: nbconvert failed", file=sys.stderr)
-            print(result.stderr, file=sys.stderr)
-            return False
+    print(f"  nbconvert: converting to HTML...")
+    result = subprocess.run(
+        [
+            "jupyter", "nbconvert",
+            "--to", "html",
+            "--no-input",
+            "--output", str(out_html),
+            str(out_nb),
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"  ERROR: nbconvert failed", file=sys.stderr)
+        print(result.stderr, file=sys.stderr)
+        return False
 
-        print(f"  wrote {out_html}")
-        return True
-
-    finally:
-        tmp_path.unlink(missing_ok=True)
+    print(f"  wrote {out_nb}")
+    print(f"  wrote {out_html}")
+    return True
 
 
 def main():
