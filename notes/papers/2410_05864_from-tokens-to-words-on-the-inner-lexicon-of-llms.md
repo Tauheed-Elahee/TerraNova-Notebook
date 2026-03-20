@@ -4,6 +4,7 @@ id: 2410.05864
 author: Kaplan, Oren, Reif, Schwartz
 publish_date: 2024-10
 url: https://arxiv.org/abs/2410.05864
+repo: https://github.com/schwartz-lab-NLP/Tokens2Words
 summary: LLMs perform intrinsic detokenization in early-to-middle layers; by layers 8–15 the last-token hidden state of a multi-token word becomes a unified concept representation, robust to arbitrary splits and OOV terms.
 ---
 
