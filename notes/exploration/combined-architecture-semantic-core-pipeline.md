@@ -85,11 +85,11 @@ The delta between Stage 2 and Stage 3 isolates the effect of **ontological super
 
 ## Relationship to Other Papers
 
-- **Token Distillation (2505.20133)**: provides an alternative to direct injection — distils mid-layer hidden states into new input embeddings by matching attention patterns. Complementary to Stage 2.
-- **Subword Compositionality (2508.17953)**: shows mean-pooling ≈ last-token extraction for most LLMs. Stage 1 can compare both extraction strategies.
-- **Snomed2Vec (1907.08650)**: Poincaré embeddings as a geometric baseline — compare Stage 1 vectors to hyperbolic embeddings to test whether the LLM has implicitly learned hyperbolic-like ontological structure.
-- **Not All Features Linear (2405.14860) + Origins of Manifolds (2505.18235)**: the geometric analysis toolkit for all three stages — circular manifolds, SAE clustering, causal validation.
-- **Token Erasure (2406.20086)**: marks the detokenisation completion point — the layer of maximal erasure is the injection target for Stage 2.
+- **Token Distillation ([[2505_20133_token-distillation-attention-aware-input-embeddings-for-new-tokens|2505.20133]])**: provides an alternative to direct injection — distils mid-layer hidden states into new input embeddings by matching attention patterns. Complementary to Stage 2.
+- **Subword Compositionality ([[2508_17953_understanding-subword-compositionality-of-large-language-models|2508.17953]])**: shows mean-pooling ≈ last-token extraction for most LLMs. Stage 1 can compare both extraction strategies.
+- **Snomed2Vec ([[1907_08650_snomed2vec-poincare-embeddings-clinical-knowledge|1907.08650]])**: Poincaré embeddings as a geometric baseline — compare Stage 1 vectors to hyperbolic embeddings to test whether the LLM has implicitly learned hyperbolic-like ontological structure.
+- **Not All Features Linear ([[2405_14860_not-all-lm-features-are-linear|2405.14860]]) + Origins of Manifolds ([[2505_18235_the-origins-of-representation-manifolds-in-large-language-models|2505.18235]])**: the geometric analysis toolkit for all three stages — circular manifolds, SAE clustering, causal validation.
+- **Token Erasure ([[2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms|2406.20086]])**: marks the detokenisation completion point — the layer of maximal erasure is the injection target for Stage 2.
 
 ---
 
