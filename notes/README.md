@@ -10,6 +10,7 @@ notes/
 ├── plans/               # planning documents
 ├── experiments/         # one file per completed/running experiment
 ├── reference/           # stable lookup tables
+├── exploration/         # conceptualizing different plans
 ├── understanding/       # conceptual notes on theory
 │   └── sae/             # SAE-specific understanding notes
 └── papers/              # per-paper annotation notes
@@ -24,6 +25,8 @@ notes/
 **`reference/`** — stable lookup tables (model candidates, SNOMED hierarchy counts, implementation notes). Consult but rarely edit.
 
 **`understanding/`** — conceptual notes on theory: SAEs, tokenisation, layer geometry, prompting strategies, the Pile corpus. The `sae/` subfolder groups SAE-specific notes. Split further if the folder exceeds ~25 files.
+
+**`exploration/`** — notes on exploring and synthesising on combining different papers and understanding into ideas. Selected a subset of notes will produce plans.
 
 **`papers/`** — one note per paper, named by arXiv ID. See [[papers/REFERENCES]] for the full index.
 
