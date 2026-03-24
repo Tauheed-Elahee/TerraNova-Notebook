@@ -13,3 +13,6 @@
 [submodule "Reference_Papers/footprints"]
 	path = Reference_Papers/footprints
 	url = https://github.com/sfeucht/footprints.git
+[submodule "Reference_Papers/Tokens2Words"]
+	path = Reference_Papers/Tokens2Words
+	url = https://github.com/schwartz-lab-NLP/Tokens2Words.git
