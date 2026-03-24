@@ -16,3 +16,6 @@
 [submodule "Reference_Papers/Tokens2Words"]
 	path = Reference_Papers/Tokens2Words
 	url = https://github.com/schwartz-lab-NLP/Tokens2Words.git
+[submodule "Reference_Papers/frame-representation-hypothesis"]
+	path = Reference_Papers/frame-representation-hypothesis
+	url = https://github.com/phvv-me/frame-representation-hypothesis.git
