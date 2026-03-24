@@ -19,3 +19,51 @@
 [submodule "Reference_Papers/MedTok"]
 	path = Reference_Papers/MedTok
 	url = https://github.com/mims-harvard/MedTok.git
+[submodule "Reference_Papers/large_concept_model"]
+	path = Reference_Papers/large_concept_model
+	url = https://github.com/facebookresearch/large_concept_model.git
+[submodule "Reference_Papers/SONAR-LLM"]
+	path = Reference_Papers/SONAR-LLM
+	url = https://github.com/FusionBrainLab/SONAR-LLM.git
+[submodule "Reference_Papers/ConceptMoE"]
+	path = Reference_Papers/ConceptMoE
+	url = https://github.com/ZihaoHuang-notabot/ConceptMoE.git
+[submodule "Reference_Papers/mat"]
+	path = Reference_Papers/mat
+	url = https://github.com/sashayd/mat.git
+[submodule "Reference_Papers/information_flow"]
+	path = Reference_Papers/information_flow
+	url = https://github.com/OFSkean/information_flow.git
+[submodule "Reference_Papers/Embeddings"]
+	path = Reference_Papers/Embeddings
+	url = https://github.com/AVBochkov/Embeddings.git
+[submodule "Reference_Papers/steering-reasoning"]
+	path = Reference_Papers/steering-reasoning
+	url = https://github.com/corl-team/steering-reasoning.git
+[submodule "Reference_Papers/lang2vec"]
+	path = Reference_Papers/lang2vec
+	url = https://github.com/antonisa/lang2vec.git
+[submodule "Reference_Papers/AUSteer"]
+	path = Reference_Papers/AUSteer
+	url = https://github.com/zijian678/AUSteer.git
+[submodule "Reference_Papers/ml-lineas"]
+	path = Reference_Papers/ml-lineas
+	url = https://github.com/apple/ml-lineas.git
+[submodule "Reference_Papers/concept_das"]
+	path = Reference_Papers/concept_das
+	url = https://github.com/colored-dye/concept_das.git
+[submodule "Reference_Papers/measuring-and-guiding-monosemanticity"]
+	path = Reference_Papers/measuring-and-guiding-monosemanticity
+	url = https://github.com/ml-research/measuring-and-guiding-monosemanticity.git
+[submodule "Reference_Papers/PS-Eval"]
+	path = Reference_Papers/PS-Eval
+	url = https://github.com/gouki510/PS-Eval.git
+[submodule "Reference_Papers/steerers"]
+	path = Reference_Papers/steerers
+	url = https://github.com/kim-dahye/steerers.git
+[submodule "Reference_Papers/Monet"]
+	path = Reference_Papers/Monet
+	url = https://github.com/dmis-lab/Monet.git
+[submodule "Reference_Papers/algorithmic-generalization-transformer-architectures"]
+	path = Reference_Papers/algorithmic-generalization-transformer-architectures
+	url = https://github.com/Awni00/algorithmic-generalization-transformer-architectures.git
