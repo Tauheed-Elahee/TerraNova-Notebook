@@ -10,3 +10,6 @@
 [submodule "Reference_Papers/tuned-lens"]
 	path = Reference_Papers/tuned-lens
 	url = https://github.com/AlignmentResearch/tuned-lens.git
+[submodule "Reference_Papers/footprints"]
+	path = Reference_Papers/footprints
+	url = https://github.com/sfeucht/footprints.git
