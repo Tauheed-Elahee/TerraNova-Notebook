@@ -7,3 +7,6 @@
 [submodule "Reference_Papers/meditok"]
 	path = Reference_Papers/meditok
 	url = https://github.com/Masaaki-75/meditok.git
+[submodule "Reference_Papers/tuned-lens"]
+	path = Reference_Papers/tuned-lens
+	url = https://github.com/AlignmentResearch/tuned-lens.git
