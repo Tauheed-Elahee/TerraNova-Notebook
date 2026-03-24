@@ -121,6 +121,39 @@ def interactive_3d_plot(points, labels=None, color_values=None, title="", point_
     return fig
 
 
+def interactive_3d_plot_by_tag(points, labels, colors, groups,
+                                title="", point_size=5, opacity=1):
+    """One Scatter3d trace per unique group; legend entries toggle each series."""
+    colors  = np.array(colors)
+    labels  = np.array(labels)
+    groups  = np.array(groups)
+    unique  = list(dict.fromkeys(groups))   # preserve first-appearance order
+
+    fig = go.Figure()
+    for group in unique:
+        mask = groups == group
+        fig.add_trace(go.Scatter3d(
+            x=points[mask, 0],
+            y=points[mask, 1],
+            z=points[mask, 2],
+            mode="markers",
+            name=group,
+            marker=dict(size=point_size, color=colors[mask].tolist(), opacity=opacity),
+            text=labels[mask],
+            hoverinfo="text",
+        ))
+
+    fig.update_layout(
+        scene=dict(
+            xaxis_title="Component 1",
+            yaxis_title="Component 2",
+            zaxis_title="Component 3",
+        ),
+        legend=dict(title="Semantic tag", itemclick="toggle", itemdoubleclick="toggleothers"),
+        title=title,
+    )
+    return fig
+
 
 def plot_scatter(x, y, colors=None, cmap='viridis', y_min=None, y_max=None,
                         xlabel='', ylabel='',
