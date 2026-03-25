@@ -21,6 +21,18 @@ Constraints:
 
 Candidates from `notes/goal.md`: `Mistral-7B`, `Llama-3-8B`, `BioMedLM` (2.7B, PubMed-trained), `Med42`.
 
+**Decision: `meta-llama/Meta-Llama-3-8B` (base)**
+
+| Criterion | Status |
+|---|---|
+| TransformerLens support | Full — `HookedTransformer.from_pretrained("meta-llama/Meta-Llama-3-8B")` |
+| Token Erasure probes | Pretrained on HF Hub for Llama-3-8B — no training sweep needed |
+| Tuned Lens | Run `available_lens_artifacts()` at setup; train if no checkpoint exists |
+| Base vs. instruct | Base — instruct RLHF artifacts distort residual stream geometry |
+| Scientific question | Baseline: "does any LLM encode SNOMED structure?" — general model appropriate |
+
+Alternatives ruled out: GPT-OSS-20B (MoE, no TransformerLens), BioMedLM (probes not pretrained, ~8h training sweep), Mistral-7B (no pretrained probes, no advantage over Llama-3-8B), Med42-70B (partial TransformerLens support).
+
 ---
 
 ## Stage 1 — Baseline Geometry
@@ -480,7 +492,7 @@ A `README.md` planning document rather than runnable code. Documents:
 
 ### `src/config.py` — shared model/layer config
 ```python
-MODEL_NAME = "..."     # Set after model selection
+MODEL_NAME = "meta-llama/Meta-Llama-3-8B"   # base model (decided 2026-03-25)
 L_DET = None           # Set after layer calibration (Stage 1 notebook 1)
 L_PRED = None          # Set after layer calibration (Stage 1 notebook 1)
 CONCEPT_CSV = "data/embeddings-concept-openai/concepts.csv"
