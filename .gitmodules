@@ -67,3 +67,18 @@
 [submodule "Reference_Papers/algorithmic-generalization-transformer-architectures"]
 	path = Reference_Papers/algorithmic-generalization-transformer-architectures
 	url = https://github.com/Awni00/algorithmic-generalization-transformer-architectures.git
+[submodule "Reference_Papers/keep"]
+	path = Reference_Papers/keep
+	url = https://github.com/G2Lab/keep
+[submodule "Reference_Papers/Snomed2Vec"]
+	path = Reference_Papers/Snomed2Vec
+	url = https://gitlab.com/agarwal.khushbu/Snomed2Vec
+[submodule "Reference_Papers/token-distillation"]
+	path = Reference_Papers/token-distillation
+	url = https://github.com/konstantinjdobler/token-distillation
+[submodule "Reference_Papers/hidden_capacity"]
+	path = Reference_Papers/hidden_capacity
+	url = https://github.com/yurakuratov/hidden_capacity
+[submodule "Reference_Papers/coconut"]
+	path = Reference_Papers/coconut
+	url = https://github.com/facebookresearch/coconut
