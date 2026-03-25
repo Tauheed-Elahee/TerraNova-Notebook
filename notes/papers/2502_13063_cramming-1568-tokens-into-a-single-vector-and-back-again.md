@@ -4,6 +4,7 @@ id: 2502.13063
 author: Kuratov, Arkhipov, Bulatov, Burtsev
 publish_date: 2025-02
 url: https://arxiv.org/abs/2502.13063
+repo: https://github.com/yurakuratov/hidden_capacity
 summary: A single LLM input embedding vector can encode information equivalent to 1568+ tokens, with capacity scaling linearly with vector count, establishing the information-theoretic feasibility of single-vector concept representation.
 ---
 

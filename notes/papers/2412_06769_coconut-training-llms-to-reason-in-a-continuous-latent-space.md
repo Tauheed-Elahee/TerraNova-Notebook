@@ -4,6 +4,7 @@ id: 2412.06769
 author: Hao, Sukhbaatar, Su, Li, Hu, Weston, Tian
 publish_date: 2024-12
 url: https://arxiv.org/abs/2412.06769
+repo: https://github.com/facebookresearch/coconut
 summary: LLMs can reason in continuous latent space by feeding each forward pass's last hidden state directly as the next input embedding, bypassing tokenization and enabling BFS-like multi-path reasoning outperforming discrete chain-of-thought.
 ---
 

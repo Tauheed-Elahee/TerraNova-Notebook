@@ -4,6 +4,7 @@ id: 2510.05049
 author: Elhussein, Meddeb, Newbury, Mirone, Stoll, Gursoy
 publish_date: 2025-10-06
 url: https://arxiv.org/abs/2510.05049
+repo: https://github.com/G2Lab/keep
 summary: Produces medical code embeddings (SNOMED CT, ICD) where ontological proximity is reflected in vector distance, by jointly training on knowledge graph structure and clinical co-occurrence data.
 ---
 

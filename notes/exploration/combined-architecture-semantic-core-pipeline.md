@@ -126,6 +126,25 @@ Stages 1 and 2 are independent once the concept set is fixed. Token Distillation
 
 ---
 
+## Referenced Papers
+
+| # | arXiv ID | Paper | GitHub |
+|---|---|---|---|
+| [^1] | 2410.05864 | From Tokens to Words (Tokens2Words) | [schwartz-lab-NLP/Tokens2Words](https://github.com/schwartz-lab-NLP/Tokens2Words) |
+| [^2] | 2303.08112 | Tuned Lens | [AlignmentResearch/tuned-lens](https://github.com/AlignmentResearch/tuned-lens) |
+| [^3] | 2406.20086 | Token Erasure | [sfeucht/footprints](https://github.com/sfeucht/footprints) |
+| [^4] | 2412.06769 | Coconut | [facebookresearch/coconut](https://github.com/facebookresearch/coconut) |
+| [^5] | 2502.04397 | MedTok | [mims-harvard/MedTok](https://github.com/mims-harvard/MedTok) |
+| [^6] | 2510.05049 | KEEP | [G2Lab/keep](https://github.com/G2Lab/keep) |
+| [^7] | 2505.20133 | Token Distillation | [konstantinjdobler/token-distillation](https://github.com/konstantinjdobler/token-distillation) |
+| [^8] | 2502.13063 | Cramming | [yurakuratov/hidden_capacity](https://github.com/yurakuratov/hidden_capacity) |
+| [^9] | 2508.17953 | Subword Compositionality | — |
+| [^10] | 1907.08650 | Snomed2Vec | [agarwal.khushbu/Snomed2Vec](https://gitlab.com/agarwal.khushbu/Snomed2Vec) (GitLab) |
+| [^11] | 2405.14860 | Not All LM Features Are Linear | [Tauheed-Elahee/MultiDimensionalFeatures](https://github.com/Tauheed-Elahee/MultiDimensionalFeatures) |
+| [^12] | 2505.18235 | Origins of Representation Manifolds | [alexandermodell/Representation-Manifolds](https://github.com/alexandermodell/Representation-Manifolds) |
+
+---
+
 [^1]: R. Kaplan, S. Oren, U. Reif, and R. Schwartz, "From Tokens to Words: On the Inner Lexicon of LLMs," in *Proc. ICLR*, 2025. [[2410_05864_from-tokens-to-words-on-the-inner-lexicon-of-llms|↗]]
 [^2]: N. Belrose, Z. Furman, L. Smith, D. Strauss, N. Nanda, and J. Steinhardt, "Eliciting Latent Predictions from Transformers with the Tuned Lens," arXiv:2303.08112, 2023. [[2303_08112_tuned-lens-eliciting-latent-predictions-from-transformers|↗]]
 [^3]: S. Feucht, T. Atkinson, E. Wallace, and D. Bau, "Token Erasure as a Footprint of Implicit Vocabulary Items in LLMs," in *Proc. EMNLP*, 2024. [[2406_20086_token-erasure-as-a-footprint-of-implicit-vocabulary-items-in-llms|↗]]

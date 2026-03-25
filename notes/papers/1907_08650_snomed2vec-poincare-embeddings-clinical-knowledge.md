@@ -4,6 +4,7 @@ id: 1907.08650
 author: Agarwal, Eftimov, Addanki, Choudhury, Tamang, Rallo
 publish_date: 2019-07-19
 url: https://arxiv.org/abs/1907.08650
+repo: https://gitlab.com/agarwal.khushbu/Snomed2Vec
 venue: KDD Workshop on Applied Data Science for Healthcare (DSHealth '19)
 summary: Graph-based embeddings of SNOMED-CT using random walks and Poincaré (hyperbolic) embeddings; achieves 5-6× improvement in concept similarity and 6-20% improvement in patient diagnosis tasks over state-of-the-art baselines.
 ---

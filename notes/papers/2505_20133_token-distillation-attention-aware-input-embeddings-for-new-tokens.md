@@ -4,6 +4,7 @@ id: 2505.20133
 author: Dobler, Elliott, de Melo
 publish_date: 2025-05-26
 url: https://arxiv.org/abs/2505.20133
+repo: https://github.com/konstantinjdobler/token-distillation
 summary: Distills intermediate hidden states of multi-token phrases into a single new input embedding by matching attention patterns, enabling frozen models to process novel multi-token concepts as single tokens without fine-tuning.
 ---
 
