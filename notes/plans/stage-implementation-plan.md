@@ -613,3 +613,24 @@ src/
 | acm_3650784 | AscleAI | — | — | Background |
 | 2506.04831 | EHR2Path | — | — | Background |
 | sage_1557_1390 | ICD-10 KG CoT | — | — | Background |
+
+---
+
+## GitHub Issue Mapping
+
+| Plan Item | Issue |
+|---|---|
+| **Prerequisite: Model Selection** | [#2](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/2) — `[Prerequisite] Model selection` |
+| **Stage 1** (parent) | [#13](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/13) — `[Stage 1] Baseline Geometry` |
+| `0-model-setup.ipynb` | [#3](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/3) — `[Stage 1] 0-model-setup.ipynb` |
+| `0b-snomed-graph.ipynb` | [#4](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/4) — `[Stage 1] 0b-snomed-graph.ipynb` |
+| `utils.py` — `gromov_delta()` + `ic_distances()` | [#5](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/5) — `[Stage 1] Implement gromov_delta() and ic_distances()` |
+| `1-layer-calibration.ipynb` | [#6](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/6) — `[Stage 1] 1-layer-calibration.ipynb` |
+| `2-concept-extraction.ipynb` | [#7](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/7) — `[Stage 1] 2-concept-extraction.ipynb` |
+| `3-geometric-analysis.ipynb` | [#8](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/8) — `[Stage 1] 3-geometric-analysis.ipynb` |
+| **Stage 2** (parent) | [#14](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/14) — `[Stage 2] Vocabulary Expansion` |
+| `1-token-distillation.ipynb` (Stage 2) | [#9](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/9) — `[Stage 2] 1-token-distillation.ipynb` |
+| `2-concept-extraction.ipynb` (Stage 2) | [#10](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/10) — `[Stage 2] 2-concept-extraction.ipynb` |
+| `3-geometric-analysis.ipynb` (Stage 2) | [#11](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/11) — `[Stage 2] 3-geometric-analysis.ipynb` |
+| **Stage 3** (parent) | [#15](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/15) — `[Stage 3] Ontology-Supervised Geometry` |
+| `stage3/README.md` | [#12](https://github.com/Tauheed-Elahee/TerraNova-Notebook/issues/12) — `[Stage 3] README.md` |
