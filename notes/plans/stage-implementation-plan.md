@@ -85,7 +85,7 @@ with open("data/stage1/snomed_isa_graph.pkl", "wb") as f:
 print(f"Nodes: {G.number_of_nodes():,}, Edges: {G.number_of_edges():,}")
 ```
 
-**Scope check:** restrict the saved graph to the subgraph reachable from the breast concept subset (ancestors of all concepts in `data/concepts.csv`) to keep the pickle small. The full SNOMED IS-A graph has ~350k nodes; the breast hierarchy is a small fraction.
+**Scope check:** restrict the saved graph to the subgraph reachable from the breast concept subset (ancestors of all concepts in `data/embeddings-concept-openai/concepts.csv`) to keep the pickle small. The full SNOMED IS-A graph has ~350k nodes; the breast hierarchy is a small fraction.
 
 ---
 
@@ -168,7 +168,7 @@ concept = pd.read_csv("path/to/CONCEPT.csv", sep="\t", dtype=str)
 snomed = concept[concept["vocabulary_id"] == "SNOMED"][["concept_code", "concept_id"]]
 # concept_code = SNOMED CT ID, concept_id = OMOP concept_id
 
-concepts_df = pd.read_csv("data/concepts.csv", dtype=str)
+concepts_df = pd.read_csv("data/embeddings-concept-openai/concepts.csv", dtype=str)
 mapping = concepts_df.merge(snomed, left_on="conceptId", right_on="concept_code", how="left")
 mapping[["conceptId", "concept_id"]].to_csv("data/stage1/snomed_omop_map.csv", index=False)
 print(f"Mapped: {mapping['concept_id'].notna().sum()} / {len(mapping)} concepts")
@@ -208,7 +208,7 @@ Compute pairwise cosine distances in residual stream space and correlate with SN
 | `src/concept-openai-embeddings/utils.py` | `distance_plot(DX, DY, labels, corr_coef='chatterjee')` | Distance scatter with correlation annotation |
 | `src/concept-openai-embeddings/utils.py` | `interactive_3d_plot(...)`, `interactive_3d_plot_by_tag(...)` | Plotly 3D PCA visualizations |
 
-**Gap — IC-based SNOMED distance (condition 2):** `data/ontological_distances.csv` only contains shortest-path distances. `keep/utils.py:calculate_all_similarities()` computes Resnik/Lin IC-based similarity but requires OMOP concept codes; the project works with SNOMED CT IDs directly. IC distances must be computed from the SNOMED IS-A graph — this is one of the two functions in the custom file (see below).
+**Gap — IC-based SNOMED distance (condition 2):** `data/embeddings-concept-openai/ontological_distances.csv` only contains shortest-path distances. `keep/utils.py:calculate_all_similarities()` computes Resnik/Lin IC-based similarity but requires OMOP concept codes; the project works with SNOMED CT IDs directly. IC distances must be computed from the SNOMED IS-A graph — this is one of the two functions in the custom file (see below).
 
 **Key pattern** (mirrors existing `3-geometric-analysis.ipynb` in Experiment 01):
 ```python
@@ -240,9 +240,9 @@ fig, ax = distance_plot(DX_geo, DY, labels, corr_coef='chatterjee')
 | `utils.py` | `semantic_sim_correlation(semantic_similarities, embedding_tensor, cats, K1, K2, code_dict, ...)` | Pearson correlation between semantic similarity and cosine similarity | Direct |
 | `utils.py` | `calculate_all_similarities(G, concept_pairs, similarity_type='both')` | Resnik/Lin IC-based similarity from SNOMED hierarchy graph | Direct |
 
-**Adaptation note:** KEEP uses OMOP concept codes; `data/concepts.csv` uses SNOMED CT IDs. The mapping is produced in `2-concept-extraction.ipynb` and saved to `data/stage1/snomed_omop_map.csv`. Concepts without an OMOP match are excluded from this block.
+**Adaptation note:** KEEP uses OMOP concept codes; `data/embeddings-concept-openai/concepts.csv` uses SNOMED CT IDs. The mapping is produced in `2-concept-extraction.ipynb` and saved to `data/stage1/snomed_omop_map.csv`. Concepts without an OMOP match are excluded from this block.
 
-Run the same `distance_plot()` / `chatterjee_corr()` pipeline on KEEP vectors and `data/embeddings_normalised.csv` (OpenAI, already computed) against the same SNOMED distance matrix to produce the three-way comparison.
+Run the same `distance_plot()` / `chatterjee_corr()` pipeline on KEEP vectors and `data/embeddings-concept-openai/embeddings_normalised.csv` (OpenAI, already computed) against the same SNOMED distance matrix to produce the three-way comparison.
 
 ##### Block C — Hyperbolic geometry tests
 
@@ -395,7 +395,7 @@ def ic_distances(snomed_graph, concepts, method='resnik'):
     ...
 ```
 
-**Why not reuse KEEP's `calculate_all_similarities()`:** that function requires OMOP concept codes and a pre-built OMOP hierarchy graph. The project works with SNOMED CT IDs directly (from `data/concepts.csv`), so the SNOMED→OMOP mapping would be needed before KEEP's function could be used. For a clean Stage 1 baseline, computing IC directly on the SNOMED hierarchy avoids that dependency.
+**Why not reuse KEEP's `calculate_all_similarities()`:** that function requires OMOP concept codes and a pre-built OMOP hierarchy graph. The project works with SNOMED CT IDs directly (from `data/embeddings-concept-openai/concepts.csv`), so the SNOMED→OMOP mapping would be needed before KEEP's function could be used. For a clean Stage 1 baseline, computing IC directly on the SNOMED hierarchy avoids that dependency.
 
 **Implementation status:** Both functions are stubs (`...`) and must be implemented before `3-geometric-analysis.ipynb` runs. Both are pure NumPy/NetworkX — no new dependencies required beyond what is already in `requirements.txt`.
 
@@ -417,7 +417,7 @@ data/stage1/
   plots/
     distance_scatter_llm.png
     distance_scatter_keep.png
-    distance_scatter_openai.png   # from data/embeddings_normalised.csv
+    distance_scatter_openai.png   # from data/embeddings-concept-openai/embeddings_normalised.csv
     umap_hyperbolic.html
     interactive_3d.html
 ```
@@ -483,17 +483,17 @@ A `README.md` planning document rather than runnable code. Documents:
 MODEL_NAME = "..."     # Set after model selection
 L_DET = None           # Set after layer calibration (Stage 1 notebook 1)
 L_PRED = None          # Set after layer calibration (Stage 1 notebook 1)
-CONCEPT_CSV = "data/concepts.csv"
-ONTOLOGY_DISTANCES_CSV = "data/ontological_distances.csv"
+CONCEPT_CSV = "data/embeddings-concept-openai/concepts.csv"
+ONTOLOGY_DISTANCES_CSV = "data/embeddings-concept-openai/ontological_distances.csv"
 ```
 
 ### Reuse from Experiment 01
 
 | Asset | Path | Used in |
 |---|---|---|
-| Concept list | `data/concepts.csv` | Stages 1, 2 |
-| SNOMED distances | `data/ontological_distances.csv` | Stages 1, 2 |
-| OpenAI embeddings | `data/embeddings_normalised.csv` | Stage 1 comparison |
+| Concept list | `data/embeddings-concept-openai/concepts.csv` | Stages 1, 2 |
+| SNOMED distances | `data/embeddings-concept-openai/ontological_distances.csv` | Stages 1, 2 |
+| OpenAI embeddings | `data/embeddings-concept-openai/embeddings_normalised.csv` | Stage 1 comparison |
 | Graph + viz utilities | `src/concept-openai-embeddings/utils.py` | Stages 1, 2 |
 
 ### Final `src/` structure
