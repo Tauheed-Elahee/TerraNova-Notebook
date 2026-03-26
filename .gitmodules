@@ -88,3 +88,6 @@
 [submodule "output"]
 	path = output
 	url = git@github.com:Tauheed-Elahee/TerraNova-Output.git
+[submodule "log"]
+	path = log
+	url = git@github.com:Tauheed-Elahee/TerraNova-Log.git
