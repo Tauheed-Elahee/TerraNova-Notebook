@@ -20,6 +20,7 @@ Usage:
     python3 run_notebooks.py --data-dir path/to/data notebook.ipynb
     python3 run_notebooks.py --log-dir path/to/log notebook.ipynb
     python3 run_notebooks.py --workspace-dir path/to/ws notebook.ipynb
+    python3 run_notebooks.py --workspace-dir path/to/ws --verbose notebook.ipynb
 
 exit codes:
   0   All notebooks succeeded
@@ -30,9 +31,37 @@ exit codes:
 import argparse
 import subprocess
 import sys
+import threading
 from pathlib import Path
 
-def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None, log_dir: Path | None) -> bool:
+
+def _tee_stream(source, *destinations):
+    """Read lines from source and write to all destinations."""
+    for line in source:
+        for dest in destinations:
+            dest.write(line)
+            dest.flush()
+
+
+def _run(cmd, cwd, log_file, verbose):
+    """Run a command, teeing output to log_file and terminal if verbose."""
+    if log_file is None or not verbose:
+        # No log file: inherit terminal. Log file without verbose: redirect only.
+        return subprocess.run(cmd, cwd=cwd, stdout=log_file, stderr=log_file)
+    # verbose + log: tee stdout+stderr to both terminal and log file
+    proc = subprocess.Popen(
+        cmd, cwd=cwd,
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+        text=True,
+    )
+    t = threading.Thread(target=_tee_stream, args=(proc.stdout, sys.stdout, log_file))
+    t.start()
+    proc.wait()
+    t.join()
+    return proc
+
+
+def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None, log_dir: Path | None, verbose: bool) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
     resolved_output_dir = (output_dir or path.parent / "output").resolve()
     nb_dir   = resolved_output_dir / "notebooks"
@@ -58,13 +87,13 @@ def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None, log
             cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
 
         print(f"  papermill: executing...")
-        result = subprocess.run(cmd, cwd=path.parent.resolve(), stdout=log_file, stderr=log_file)
+        result = _run(cmd, path.parent.resolve(), log_file, verbose)
         if result.returncode != 0:
             print(f"  ERROR: papermill failed (see {'log' if log_file else 'above'})", file=sys.stderr)
             return False
 
         print(f"  nbconvert: converting to HTML...")
-        result = subprocess.run(
+        result = _run(
             [
                 "jupyter", "nbconvert",
                 "--to", "html",
@@ -72,8 +101,9 @@ def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None, log
                 "--output", str(out_html),
                 str(out_nb),
             ],
-            stdout=log_file,
-            stderr=log_file,
+            path.parent.resolve(),
+            log_file,
+            verbose,
         )
         if result.returncode != 0:
             print(f"  ERROR: nbconvert failed (see {'log' if log_file else 'above'})", file=sys.stderr)
@@ -110,6 +140,11 @@ def main():
         "--workspace-dir", type=Path, default=None,
         help="Common parent for data/, output/, and log/ (shorthand for --data-dir <ws>/data --output-dir <ws>/output --log-dir <ws>/log)",
     )
+    parser.add_argument(
+        "--verbose", "-v", action="store_true",
+        help="Stream papermill and nbconvert output to both terminal and log file "
+             "(only meaningful with --log-dir or --workspace-dir)",
+    )
     args = parser.parse_args()
 
     for attr in ("workspace_dir", "data_dir", "output_dir", "log_dir"):
@@ -128,7 +163,7 @@ def main():
 
     ok = True
     for path in args.notebooks:
-        if not run_notebook(path, args.output_dir, args.data_dir, args.log_dir):
+        if not run_notebook(path, args.output_dir, args.data_dir, args.log_dir, args.verbose):
             ok = False
 
     sys.exit(0 if ok else 1)
