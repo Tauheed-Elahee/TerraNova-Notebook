@@ -82,3 +82,6 @@
 [submodule "Reference_Papers/coconut"]
 	path = Reference_Papers/coconut
 	url = https://github.com/facebookresearch/coconut
+[submodule "data"]
+	path = data
+	url = git@github.com:Tauheed-Elahee/TerraNova-Data.git
