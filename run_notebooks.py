@@ -20,6 +20,7 @@ Usage:
     python3 run_notebooks.py --data-dir path/to/data notebook.ipynb
     python3 run_notebooks.py --log-dir path/to/log notebook.ipynb
     python3 run_notebooks.py --workspace-dir path/to/ws notebook.ipynb
+    python3 run_notebooks.py --workspace-dir path/to/ws --workspace-subdir stage1 notebook.ipynb
     python3 run_notebooks.py --workspace-dir path/to/ws --verbose notebook.ipynb
 
 exit codes:
@@ -141,6 +142,11 @@ def main():
         help="Common parent for data/, output/, and log/ (shorthand for --data-dir <ws>/data --output-dir <ws>/output --log-dir <ws>/log)",
     )
     parser.add_argument(
+        "--workspace-subdir", type=str, default=None, metavar="SUBDIR",
+        help="Subdirectory appended to data/, output/, and log/ within --workspace-dir "
+             "(e.g. 'stage1-baseline-geometry'). Ignored without --workspace-dir.",
+    )
+    parser.add_argument(
         "--verbose", "-v", action="store_true",
         help="Stream papermill and nbconvert output to both terminal and log file "
              "(only meaningful with --log-dir or --workspace-dir)",
@@ -152,9 +158,10 @@ def main():
             setattr(args, attr, given_path.resolve())
 
     if workspace := args.workspace_dir:
-        args.data_dir   = args.data_dir   or workspace / "data"
-        args.output_dir = args.output_dir or workspace / "output"
-        args.log_dir    = args.log_dir    or workspace / "log"
+        sub = Path(args.workspace_subdir) if args.workspace_subdir else None
+        args.data_dir   = args.data_dir   or (workspace / "data"   / sub if sub else workspace / "data")
+        args.output_dir = args.output_dir or (workspace / "output" / sub if sub else workspace / "output")
+        args.log_dir    = args.log_dir    or (workspace / "log"    / sub if sub else workspace / "log")
 
     for path in args.notebooks:
         if not path.exists():
