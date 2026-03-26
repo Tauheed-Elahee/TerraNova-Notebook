@@ -11,13 +11,14 @@ Results are written to output/notebooks/<notebook-stem>.ipynb and output/html/<n
 Data files are read/written from data/ (sibling of the notebook) by default; override with
 --data-dir to share a single data directory across all notebooks.
 
-Use --workspace-dir to set a common parent for both data/ and output/ at once.
-Explicit --data-dir or --output-dir take precedence over --workspace-dir.
+Use --workspace-dir to set a common parent for data/, output/, and log/ at once.
+Explicit --data-dir, --output-dir, or --log-dir take precedence over --workspace-dir.
 
 Usage:
     python3 run_notebooks.py notebook.ipynb [notebook2.ipynb ...]
     python3 run_notebooks.py --output-dir path/to/dir notebook.ipynb
     python3 run_notebooks.py --data-dir path/to/data notebook.ipynb
+    python3 run_notebooks.py --log-dir path/to/log notebook.ipynb
     python3 run_notebooks.py --workspace-dir path/to/ws notebook.ipynb
 
 exit codes:
@@ -31,7 +32,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None) -> bool:
+def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None, log_dir: Path | None) -> bool:
     """Execute a notebook with papermill and export it as HTML. Returns True on success."""
     resolved_output_dir = (output_dir or path.parent / "output").resolve()
     nb_dir   = resolved_output_dir / "notebooks"
@@ -44,32 +45,43 @@ def run_notebook(path: Path, output_dir: Path | None, data_dir: Path | None) -> 
 
     print(f"\n[{path.name}]")
 
-    cmd = ["papermill", "--log-output", str(path.resolve()), str(out_nb)]
-    if data_dir is not None:
-        cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
+    log_file = None
+    if log_dir is not None:
+        log_dir.mkdir(parents=True, exist_ok=True)
+        log_path = log_dir / f"{path.stem}.log"
+        log_file = open(log_path, "w")
+        print(f"  log: {log_path}")
 
-    print(f"  papermill: executing...")
-    result = subprocess.run(cmd, cwd=path.parent.resolve())
-    if result.returncode != 0:
-        print(f"  ERROR: papermill failed (see above)", file=sys.stderr)
-        return False
+    try:
+        cmd = ["papermill", "--log-output", str(path.resolve()), str(out_nb)]
+        if data_dir is not None:
+            cmd += ["-p", "DATA_DIR", str(data_dir.resolve())]
 
-    print(f"  nbconvert: converting to HTML...")
-    result = subprocess.run(
-        [
-            "jupyter", "nbconvert",
-            "--to", "html",
-            "--no-input",
-            "--output", str(out_html),
-            str(out_nb),
-        ],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        print(f"  ERROR: nbconvert failed", file=sys.stderr)
-        print(result.stderr, file=sys.stderr)
-        return False
+        print(f"  papermill: executing...")
+        result = subprocess.run(cmd, cwd=path.parent.resolve(), stdout=log_file, stderr=log_file)
+        if result.returncode != 0:
+            print(f"  ERROR: papermill failed (see {'log' if log_file else 'above'})", file=sys.stderr)
+            return False
+
+        print(f"  nbconvert: converting to HTML...")
+        result = subprocess.run(
+            [
+                "jupyter", "nbconvert",
+                "--to", "html",
+                "--no-input",
+                "--output", str(out_html),
+                str(out_nb),
+            ],
+            stdout=log_file,
+            stderr=log_file,
+        )
+        if result.returncode != 0:
+            print(f"  ERROR: nbconvert failed (see {'log' if log_file else 'above'})", file=sys.stderr)
+            return False
+
+    finally:
+        if log_file:
+            log_file.close()
 
     print(f"  wrote {out_nb}")
     print(f"  wrote {out_html}")
@@ -91,18 +103,23 @@ def main():
         help="Data directory for all notebooks (default: data/ next to each notebook)",
     )
     parser.add_argument(
+        "--log-dir", type=Path, default=None,
+        help="Directory to write per-notebook log files (default: no log file)",
+    )
+    parser.add_argument(
         "--workspace-dir", type=Path, default=None,
-        help="Common parent for data/ and output/ (shorthand for --data-dir <ws>/data --output-dir <ws>/output)",
+        help="Common parent for data/, output/, and log/ (shorthand for --data-dir <ws>/data --output-dir <ws>/output --log-dir <ws>/log)",
     )
     args = parser.parse_args()
 
-    for attr in ("workspace_dir", "data_dir", "output_dir"):
+    for attr in ("workspace_dir", "data_dir", "output_dir", "log_dir"):
         if given_path := getattr(args, attr):
             setattr(args, attr, given_path.resolve())
 
     if workspace := args.workspace_dir:
         args.data_dir   = args.data_dir   or workspace / "data"
         args.output_dir = args.output_dir or workspace / "output"
+        args.log_dir    = args.log_dir    or workspace / "log"
 
     for path in args.notebooks:
         if not path.exists():
@@ -111,7 +128,7 @@ def main():
 
     ok = True
     for path in args.notebooks:
-        if not run_notebook(path, args.output_dir, args.data_dir):
+        if not run_notebook(path, args.output_dir, args.data_dir, args.log_dir):
             ok = False
 
     sys.exit(0 if ok else 1)
