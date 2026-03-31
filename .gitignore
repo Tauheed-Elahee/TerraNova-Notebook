@@ -5,3 +5,4 @@ __pycache__/**
 memory/**
 notes/.obsidian/**
 log/**
+venv-hf-bucket/**

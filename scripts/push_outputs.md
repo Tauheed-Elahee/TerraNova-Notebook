@@ -54,3 +54,17 @@ Or to pull only the data submodule:
 ```bash
 cd data && git pull
 ```
+
+Sync outputs to HuggingFace Bucket:
+```bash
+python3 -m venv /data/venv-hf-bucket
+  /data/venv-hf-bucket/bin/pip install "huggingface_hub>=1.8.0" typer
+
+# Then each time you sync:
+
+  /data/venv-hf-bucket/bin/hf buckets sync /data hf://buckets/tauheed-elahee/TerraNova
+
+# Store it under /data/ so it persists across Space restarts (unlike /home/user/ which is ephemeral). You could also add the sync command to scripts/push_outputs.md as the
+# canonical sync step.
+```
+```
