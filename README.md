@@ -20,3 +20,12 @@ See [`notes/plans/stage-implementation-plan.md`](notes/plans/stage-implementatio
 ## Data
 
 SNOMED concept data is retrieved via the Snowstorm client at https://snowstorm.snomed.consultologist.ai
+
+## License
+
+Copyright 2026 Tauheed Elahee. All rights reserved.
+
+This software is licensed under the [PolyForm Strict License 1.0.0](LICENSE).
+The only permitted use is running the software to verify and reproduce the
+research results described in this repository. No other use, modification,
+or distribution is permitted without explicit written consent from the author.
