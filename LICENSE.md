@@ -1,3 +1,18 @@
+# Required Notice
+
+(c) Copyright 2026 Tauheed Elahee
+
+# Permitted Use Notice
+
+The only use permitted under this license is running
+the software to verify and reproduce the research results described in the
+accompanying publications and README. All other noncommercial uses permitted
+by the PolyForm Strict License 1.0.0 below are explicitly excluded by this
+notice. No commercial use, modification, or distribution is permitted.
+
+---
+---
+
 # PolyForm Strict License 1.0.0
 
 <https://polyformproject.org/licenses/strict/1.0.0>
@@ -102,17 +117,3 @@ software under these terms.
 
 **Use** means anything you do with the software requiring one
 of your licenses.
-
----
-
-## Permitted Use Notice
-
-The only use permitted under this license is running
-the software to verify and reproduce the research results described in the
-accompanying publications and README. All other noncommercial uses permitted
-by the PolyForm Strict License 1.0.0 below are explicitly excluded by this
-notice. No commercial use, modification, or distribution is permitted.
-
-## Required Notice
-
-Copyright 2026 Tauheed Elahee
