@@ -13,6 +13,7 @@ tmux new-session -d -s "$SESSION" \
      --verbose \
      /data/src/stage1-baseline-geometry/0-model-setup.ipynb \
      /data/src/stage1-baseline-geometry/0b-snomed-graph.ipynb \
+     /data/src/stage1-baseline-geometry/1b-concept-vocabulary.ipynb \
      /data/src/stage1-baseline-geometry/1-layer-calibration.ipynb \
   && echo "" \
   && echo "=== Part A complete ===" \
