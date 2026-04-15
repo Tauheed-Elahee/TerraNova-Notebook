@@ -149,6 +149,8 @@ triton==2.1.0
 typeguard==2.13.3
 typer==0.12.3
 typing_extensions==4.12.2
+umap-learn
+gensim<4
 tzdata==2024.1
 urllib3==2.2.2
 uvloop==0.19.0
