@@ -22,6 +22,33 @@ def split_source(source: str) -> list[str]:
     return lines
 
 
+def _needs_fixing(source) -> bool:
+    """Return True if source is not in canonical line-array form.
+
+    Catches two non-canonical shapes:
+    - A bare string:  "line1\nline2\nline3"
+    - A list where any element contains an embedded newline (not only at the
+      very end of the string):  ["line1\nline2\nline3"]
+    """
+    if isinstance(source, str):
+        return True
+    if isinstance(source, list):
+        for line in source:
+            if not isinstance(line, str):
+                continue
+            # Strip the trailing \n (if present) and check for any remaining \n.
+            inner = line[:-1] if line.endswith("\n") else line
+            if "\n" in inner:
+                return True
+    return False
+
+
+def _normalize(source) -> list[str]:
+    """Convert source (str or list) to canonical line-array form."""
+    text = source if isinstance(source, str) else "".join(source)
+    return split_source(text)
+
+
 def fix_notebook(path: Path, check_only: bool) -> bool:
     """
     Returns True if the file was (or would be) modified.
@@ -38,8 +65,8 @@ def fix_notebook(path: Path, check_only: bool) -> bool:
 
     for i, cell in enumerate(cells):
         source = cell.get("source")
-        if isinstance(source, str):
-            cell["source"] = split_source(source)
+        if _needs_fixing(source):
+            cell["source"] = _normalize(source)
             changed = True
             cell_id = cell.get("id", f"index {i}")
             print(f"  {'would fix' if check_only else 'fixed'} cell {cell_id!r} in {path}")
