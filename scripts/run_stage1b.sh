@@ -11,8 +11,8 @@ tmux new-session -d -s "$SESSION" \
      --workspace-dir /data \
      --workspace-subdir stage1-baseline-geometry \
      --verbose \
-     /data/src/stage1-baseline-geometry/2-concept-extraction.ipynb \
-     /data/src/stage1-baseline-geometry/3-geometric-analysis.ipynb \
+     /data/src/stage1-baseline-geometry/concept-2-concept-extraction.ipynb \
+     /data/src/stage1-baseline-geometry/concept-3-geometric-analysis.ipynb \
   && echo "" \
   && echo "=== Part B complete ===" \
   && echo "Next steps: push outputs — see scripts/push_outputs.md"'
